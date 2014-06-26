@@ -1,0 +1,7 @@
+---
+bills:
+  - description: Garbage
+    total_cost: 178.08
+    for_dates:
+      start: 2014-03-31
+      end: 2014-06-14

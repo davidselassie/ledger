@@ -1,0 +1,52 @@
+---
+house:
+  name: Housetub
+  min_people: 6
+  people:
+    - name: Stubbs
+      residencies:
+        - start: 2013-08-01
+          end: 2014-05-23
+        - start: 2014-08-06
+    - name: Connie
+      residencies:
+        - start: 2013-08-01
+          end_exclusive: 2014-06-07
+    - name: Varenhorst
+      residencies:
+        - start: 2013-08-01
+          end_exclusive: 2014-06-07
+    - name: Sima
+      residencies:
+        - start: 2013-08-01
+          end_exclusive: 2014-08-01
+    - name: David
+      residencies:
+        - start: 2013-09-01
+          end_exclusive: 2014-08-01
+    - name: Audrey
+      residencies:
+        - start: 2013-09-01
+          end: 2014-05-27
+    - name: Lauth
+      residencies:
+        - start: 2013-09-01
+          end: 2014-05-27
+    - name: Stephen
+      residencies: []
+    - name: Thibault
+      residencies:
+        - start: 2014-06-07
+          end_exclusive: 2014-08-01
+    - name: Pieter
+      residencies:
+        - start: 2014-06-07
+          end_exclusive: 2014-08-01
+    - name: Juan Pablo
+      residencies:
+        - start: 2014-06-03
+          end_exclusive: 2014-08-01
+    - name: Rodolphe
+      residencies:
+        - start: 2014-06-03
+          end_exclusive: 2014-08-01
