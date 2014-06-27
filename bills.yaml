@@ -5,3 +5,8 @@ bills:
     for_dates:
       start: 2014-03-31
       end: 2014-06-14
+  - description: EBMUD
+    total_cost: 211.68
+    for_dates:
+      start: 2014-04-16
+      end: 2014-06-13
