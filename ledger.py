@@ -6,14 +6,14 @@ amongst all people who are living in a house.
 
 See README.md for YAML definitions.
 """
-import arrow
 from collections import namedtuple
-import datetime
+from datetime import date
+from datetime import timedelta
 import yaml
 import sys
 
 
-FUTURE = arrow.get('9999-01-01')  # This is a date far in the future.
+FUTURE = date(9999, 1, 1)  # This is a date far in the future.
 DateRange = namedtuple('DateRange', (
     'start',
     'end',
@@ -164,12 +164,10 @@ def calc_all_personal_costs(bill, house):
 
 
 def type_date(d):
-    if isinstance(d, arrow.arrow.Arrow):
+    if isinstance(d, date):
         return d
-    elif isinstance(d, datetime.date):
-        return arrow.get(datetime.datetime.combine(d, datetime.time()), 'UTC')
     else:
-        return arrow.get(d)
+        return datetime.strptime(d, '%Y-%m-%d').date()
 
 
 def type_date_range(d):
@@ -179,7 +177,7 @@ def type_date_range(d):
     if 'end' in d:
         end_date = type_date(d['end'])
     elif 'end_exclusive' in d:
-        end_date = type_date(d['end_exclusive']) - datetime.timedelta(days=1)
+        end_date = type_date(d['end_exclusive']) - timedelta(days=1)
     return DateRange(start=start_date, end=end_date)
 
 
@@ -225,8 +223,8 @@ def main(house_fn, bills_fn):
 def print_bill(bill):
     print('For {0!r} from {1} to {2} totalling ${3:.2f}:'.format(
         bill.description,
-        bill.for_dates.start.date(),
-        bill.for_dates.end.date(),
+        bill.for_dates.start,
+        bill.for_dates.end,
         bill.total_cost,
     ))
 
