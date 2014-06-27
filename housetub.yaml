@@ -33,15 +33,16 @@ house:
         - start: 2013-09-01
           end: 2014-05-27
     - name: Stephen
-      residencies: []
+      residencies:
+        - start: 2014-08-01
     - name: Thibault
       residencies:
         - start: 2014-06-07
-          end_exclusive: 2014-08-01
+          end_exclusive: 2014-09-01
     - name: Pieter
       residencies:
         - start: 2014-06-07
-          end_exclusive: 2014-08-01
+          end_exclusive: 2014-09-01
     - name: Juan Pablo
       residencies:
         - start: 2014-06-03
