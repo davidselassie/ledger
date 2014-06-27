@@ -16,7 +16,7 @@ import sys
 FUTURE = date(9999, 1, 1)  # This is a date far in the future.
 DateRange = namedtuple('DateRange', (
     'start',
-    'end',
+    'end_exclusive',
 ))
 Bill = namedtuple('Bill', (
     'description',
@@ -37,39 +37,52 @@ House = namedtuple('House', (
 def date_range_length(dr):
     """Return the timedelta corresponding to the lenght of a date range.
 
+    >>> date_range_length(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)))
+    datetime.timedelta(31)
+
     :type dr: DateRange
     :rtype: timedelta
     """
     if (
             dr.start == FUTURE
-            or dr.end == FUTURE
+            or dr.end_exclusive == FUTURE
             and not (
                 dr.start == FUTURE
-                and dr.end == FUTURE
+                and dr.end_exclusive == FUTURE
             )
     ):
         raise ValueError('no length of an unbounded date range')
-    return dr.end - dr.start
+    return dr.end_exclusive - dr.start
 
 
 def date_range_intersection(a, b):
     """Find the intersection date range of two other date ranges.
+
+    >>> date_range_intersection(
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)),
+    ... DateRange(start=date(2014, 1, 16), end_exclusive=date(2014, 2, 15)))
+    DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31))
 
     :type a: DateRange
     :type b: DateRange
     :rtype: DateRange
     """
     i_lb = max(a.start, b.start)
-    i_ub = min(a.end, b.end)
+    i_ub = min(a.end_exclusive, b.end_exclusive)
     if i_ub >= i_lb:
-        return DateRange(start=i_lb, end=i_ub)
+        return DateRange(start=i_lb, end_exclusive=i_ub)
     else:
         # Return an empty date range.
-        return DateRange(start=i_lb, end=i_lb)
+        return DateRange(start=i_lb, end_exclusive=i_lb)
 
 
 def date_range_overlap_fraction(a, b):
-    """Given two date ranges, find the fraction of a that is contained by b.
+    """Given two date ranges, find the fraction of a that is also in b.
+
+    >>> date_range_overlap_fraction(
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)),
+    ... DateRange(start=date(2014, 1, 16), end_exclusive=date(2014, 2, 15)))
+    0.5
 
     :type a: DateRange
     :type b: DateRange
@@ -175,10 +188,10 @@ def type_date_range(d):
     if 'end' not in d and 'end_exclusive' not in d:
         end_date = FUTURE
     if 'end' in d:
-        end_date = type_date(d['end'])
+        end_date = type_date(d['end']) + timedelta(days=1)
     elif 'end_exclusive' in d:
-        end_date = type_date(d['end_exclusive']) - timedelta(days=1)
-    return DateRange(start=start_date, end=end_date)
+        end_date = type_date(d['end_exclusive'])
+    return DateRange(start=start_date, end_exclusive=end_date)
 
 
 def type_person(d):
@@ -224,7 +237,7 @@ def print_bill(bill):
     print('For {0!r} from {1} to {2} totalling ${3:.2f}:'.format(
         bill.description,
         bill.for_dates.start,
-        bill.for_dates.end,
+        bill.for_dates.end_exclusive - timedelta(days=1),
         bill.total_cost,
     ))
 
