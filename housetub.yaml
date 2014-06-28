@@ -1,7 +1,7 @@
 ---
 house:
   name: Housetub
-  min_people: 6
+  min_people: 4
   people:
     - name: Stubbs
       residencies:
