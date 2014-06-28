@@ -1,22 +1,26 @@
 ---
 bills:
   # Varenhorst paid: 118.73 + 178.08 * 3 = 652.97
-  - description: Garbage - Varenhorst
+  - description: Garbage
+    paid_by: Varenhorst
     total_cost: 118.73
     for_dates:
       start: 2013-08-01
       end_exclusive: 2013-09-30
-  - description: Garbage - Varenhorst
+  - description: Garbage
+    paid_by: Varenhorst
     total_cost: 178.08
     for_dates:
       start: 2013-09-30
       end_exclusive: 2013-12-31
-  - description: Garbage - Varenhorst
+  - description: Garbage
+    paid_by: Varenhorst
     total_cost: 178.08
     for_dates:
       start: 2013-12-31
       end_exclusive: 2014-03-31
-  - description: Garbage - Varenhorst
+  - description: Garbage
+    paid_by: Varenhorst
     total_cost: 178.08
     for_dates:
       start: 2014-03-31
@@ -25,57 +29,68 @@ bills:
   # Stubbs paid: 319.80 + 120.80 * 7 + 127.70 = 1293.10
   # David paid: 154.30
   # House Acct paid: 120.80
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 319.80
     for_dates:
       start: 2013-08-08
       end: 2013-09-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80  # Late payment broken out
     for_dates:
       start: 2013-09-08
       end: 2013-10-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 127.70  # Credit payment
     for_dates:
       start: 2013-10-08
       end: 2013-11-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80
     for_dates:
       start: 2013-11-08
       end: 2013-12-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80
     for_dates:
       start: 2013-12-08
       end: 2014-01-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80
     for_dates:
       start: 2014-01-08
       end: 2014-02-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80
     for_dates:
       start: 2014-02-08
       end: 2014-03-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80
     for_dates:
       start: 2014-03-08
       end: 2014-04-07
-  - description: Comcast - Stubbs
+  - description: Comcast
+    paid_by: Stubbs
     total_cost: 120.80
     for_dates:
       start: 2014-04-08
       end: 2014-05-07
-  - description: Comcast - House Acct
+  - description: Comcast
+    paid_by: House Acct
     total_cost: 120.80
     for_dates:
       start: 2014-05-08
       end: 2014-06-07
-  - description: Comcast - David
+  - description: Comcast
+    paid_by: David
     total_cost: 154.30  # Late payment broken out
     for_dates:
       start: 2014-06-08
@@ -83,27 +98,32 @@ bills:
 
   # Connie paid: 163.44 + 406.60 + 170.45 = 740.49
   # David paid: 211.68
-  - description: EBMUD - Connie
+  - description: EBMUD
+    paid_by: Connie
     total_cost: 163.44
     for_dates:
       start: 2013-08-21
       end_exclusive: 2013-10-14
-  - description: EBMUD - Connie
+  - description: EBMUD
+    paid_by: Connie
     total_cost: 204.65
     for_dates:
       start: 2013-10-14
       end_exclusive: 2013-12-15
-  - description: EBMUD - Connie
+  - description: EBMUD
+    paid_by: Connie
     total_cost: 201.95  # Late payment 406.60-204.65
     for_dates:
       start: 2013-12-15
       end_exclusive: 2014-02-13
-  - description: EBMUD - Connie
+  - description: EBMUD
+    paid_by: Connie
     total_cost: 170.45
     for_dates:
       start: 2014-02-13
       end_exclusive: 2014-04-16
-  - description: EBMUD - David
+  - description: EBMUD
+    paid_by: David
     total_cost: 211.68
     for_dates:
       start: 2014-04-16
@@ -112,32 +132,38 @@ bills:
   # Stubbs paid: 474.35 - 295.00 (deposit) + 700.00 + 1000.00 = 1879.35
   # David paid: 706.03 + 344.98 = 1051.01
   # House Acct paid: 316.00
-  - description: PGE - Stubbs
+  - description: PGE
+    paid_by: Stubbs
     total_cost: 100.95  # Late payment 395.95-295
     for_dates:
       start: 2013-08-04
       end: 2013-08-27
-  - description: PGE - Stubbs
+  - description: PGE
+    paid_by: Stubbs
     total_cost: 78.04  # Late payment 474.35-395.95
     for_dates:
       start: 2013-08-28
       end: 2013-09-26
-  - description: PGE - Stubbs
+  - description: PGE
+    paid_by: Stubbs
     total_cost: 167.28
     for_dates:
       start: 2013-09-27
       end: 2013-10-25
-  - description: PGE - Stubbs
+  - description: PGE
+    paid_by: Stubbs
     total_cost: 361.41  # Late payment 528.69-167.28
     for_dates:
       start: 2013-10-26
       end: 2013-11-25
-  - description: PGE - Stubbs
+  - description: PGE
+    paid_by: Stubbs
     total_cost: 599.76  # Credit payment? WTF?
     for_dates:
       start: 2013-11-26
       end: 2013-12-27
-  - description: PGE - Stubbs
+  - description: PGE
+    paid_by: Stubbs
     total_cost: 442.37  # Late payment 870.82-428.45
     for_dates:
       start: 2013-12-28
@@ -157,7 +183,8 @@ bills:
     for_dates:
       start: 2014-03-29
       end: 2014-04-29
-  - description: PGE - David
+  - description: PGE
+    paid_by: David
     total_cost: 305.68  # Late payment 660.98-355.30
     for_dates:
       start: 2014-04-30
