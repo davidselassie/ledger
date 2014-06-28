@@ -34,8 +34,50 @@ House = namedtuple('House', (
 ))
 
 
+def split_date_range(dr, d):
+    """Return however many date ranges exist after splitting by the given date.
+
+    If the date falls outside the range, then that means no split occurs.
+
+    >>> split_date_range(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)), date(2014, 1, 16))
+    (DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 2, 1)))
+    >>> split_date_range(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)), date(2014, 3, 1))
+    (DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 2, 1)),)
+
+    :type dr: DateRange
+    :type d: date
+    :rtype: tuple of DateRanges
+    """
+    if d > dr.start and d < dr.end_exclusive:
+        return (
+            DateRange(start=dr.start, end_exclusive=d),
+            DateRange(start=d, end_exclusive=dr.end_exclusive),
+        )
+    else:
+        return (dr, )
+
+
+def slice_date_range(dr, ds):
+    """Slice up a date range into multiple ones on the given days.
+
+    >>> slice_date_range(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)), frozenset((date(2014, 1, 5), date(2014, 1, 30))))
+    (DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 5)), DateRange(start=datetime.date(2014, 1, 5), end_exclusive=datetime.date(2014, 1, 30)), DateRange(start=datetime.date(2014, 1, 30), end_exclusive=datetime.date(2014, 2, 1)))
+
+    :type dr: DateRange
+    :type ds: iterable of dates
+    :rtype: tuple of DateRanges
+    """
+    drs = (dr, )
+    for d in ds:
+        new_drs = tuple()
+        for dr in drs:
+            new_drs += split_date_range(dr, d)
+        drs = new_drs
+    return drs
+
+
 def date_range_length(dr):
-    """Return the timedelta corresponding to the lenght of a date range.
+    """Return the timedelta corresponding to the length of a date range.
 
     >>> date_range_length(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)))
     datetime.timedelta(31)
@@ -92,58 +134,127 @@ def date_range_overlap_fraction(a, b):
     return date_range_length(i) / date_range_length(a)
 
 
-def calc_relative_responsibility(bill_date_range, person):
-    """Figure out the _relative_ share of a bill a person is responsible
-    for.
+def slice_bill(bill, ds):
+    """Slice a bill into parts based on dates, with each part having the
+    cost proportional to its duration.
 
-    If a person is only in residence for half of the bill's duration,
-    they are responsible for 0.5 a person's share. Someone who is in
-    residence for the entirety of a bill is responsible for 1.0 of a
-    share.
+    >>> slice_bill(Bill(description=None, for_dates=DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)), total_cost=100.0), frozenset((date(2014, 1, 16), )))
+    (Bill(description=None, for_dates=DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), total_cost=50.0), Bill(description=None, for_dates=DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31)), total_cost=50.0))
 
-    :type bill_date_range: DateRange
-    :type person: Person
-    :rtype: float
+    :type bill: Bill
+    :type ds: iterable of dates
+    :rtype: tuple of Bills
     """
-    return sum(
-        date_range_overlap_fraction(bill_date_range, residency)
-        for residency
-        in person.residencies
+    drs = slice_date_range(bill.for_dates, ds)
+    split_bills = tuple(
+        Bill(
+            description=bill.description,
+            for_dates=dr,
+            total_cost=bill.total_cost * date_range_overlap_fraction(bill.for_dates, dr),
+        )
+        for dr
+        in drs
     )
+    total_split_cost = sum(b.total_cost for b in split_bills)
+    if round(bill.total_cost, 2) != round(total_split_cost, 2):
+        raise RuntimeError('bill slice failed: total is {0}, slice total is {1}'.format(
+            bill.total_cost,
+            total_split_cost,
+        ))
+    return split_bills
 
 
-def calc_all_relative_responsibilities(bill, people):
-    """Calculate the relative responsabilities of a list of people for a
-    bill.
+def residents_during_date_range(dr, people):
+    """Calculate who was in residence during a date range.
 
-    :type bill: Bill
+    People must not be in residence for only part of the date range;
+    that will raise an exception.
+
+    :type dr: DateRange
     :type people: iterable of Persons
-    :rtype: dict from Person to float
+    :rtype: set of Persons
     """
-    return {
-        person: calc_relative_responsibility(bill.for_dates, person)
-        for person
-        in people
-    }
+    residents = set()
+    for person in people:
+        fraction_of_dr_in_residency = sum(date_range_overlap_fraction(dr, r) for r in person.residencies)
+        if fraction_of_dr_in_residency == 1.0:
+            residents.add(person)
+        elif fraction_of_dr_in_residency != 0.0:
+            raise RuntimeError('{0} is only in residence for part of {1}'.format(
+                person,
+                dr,
+            ))
+    return frozenset(residents)
 
 
-def calc_personal_costs_from_responsibilities(bill_total_cost, person_to_relative_responsibility):
-    """Given relative responsibilities for all people, determine what part
-    of the total cost of a bill each owes.
+def split_bill_evenly(bill_total_cost, residents):
+    """Given the cost of a bill, split it evenly amongst all people who are
+    currently in residence. Return a dict of what each person owes.
 
-    :type bill: Bill
-    :type person_to_relative_responsibility: dict from Person to float
+    :type bill_total_cost: float in dollars
+    :type residents: iterable of Persons
     :rtype: dict from Person to float in dollars
     """
-    total_responsibility = sum(person_to_relative_responsibility.values())
+    num_residents = len(residents)
     return {
-        person: relative_responsibility / total_responsibility * bill_total_cost
-        for person, relative_responsibility
-        in person_to_relative_responsibility.items()
+        person: bill_total_cost / num_residents
+        for person
+        in residents
     }
 
 
-def calc_all_personal_costs(bill, house):
+def sum_dicts(a, b):
+    """Union the values in two dictionaries, summing if there are
+    collisions.
+
+    >>> sum_dicts({1: 1, 3: 3}, {1: 2, 4: 4})
+    {1: 3, 3: 3, 4: 4}
+    """
+    o = dict(a)
+    for k, v in b.items():
+        try:
+            o[k] += v
+        except KeyError:
+            o[k] = v
+    return o
+
+
+def bill_slice_personal_costs(bill_slice, house):
+    """Calculate what dollar amounts of a slice of a bill are owed by each
+    person in the house.
+
+    An exception will be raised if anyone moves in or out during this
+    slice's time period, or if the house is under-rented during the
+    slice.
+
+    :type bill_slice: Bill
+    :type house: House
+    :rtype: dict from Person to float in dollars
+
+    """
+    residents_during_slice = residents_during_date_range(
+        bill_slice.for_dates,
+        house.people,
+    )
+    if len(residents_during_slice) < house.min_people:
+        raise ValueError('house is under-rented during {0}'.format(
+            bill_slice.for_dates,
+        ))
+
+    person_to_slice_cost = split_bill_evenly(
+        bill_slice.total_cost,
+        residents_during_slice,
+    )
+    total_personal_slice_costs = sum(person_to_slice_cost.values())
+    if round(bill_slice.total_cost, 2) != round(total_personal_slice_costs, 2):
+        raise RuntimeError('splitting bill slice failed: slice total is {0}; split slice total is {1}'.format(
+            bill_slice.total_cost,
+            total_personal_slice_costs,
+        ))
+    return person_to_slice_cost
+
+
+def bill_personal_costs(bill, house):
     """Calculate what dollar amounts of a bill are owed by all people in the
     house.
 
@@ -151,29 +262,32 @@ def calc_all_personal_costs(bill, house):
     :type house: House
     :rtype: dict from Person to float in dollars
     """
-    person_to_relative_responsibility = calc_all_relative_responsibilities(
-        bill,
-        house.people,
-    )
-
-    if sum(person_to_relative_responsibility.values()) < house.min_people:
-        raise ValueError('house is under-rented during {0}'.format(
-            bill.for_dates,
-        ))
-
-    person_to_cost = calc_personal_costs_from_responsibilities(
-        bill.total_cost,
-        person_to_relative_responsibility,
-    )
+    person_to_cost = {}
+    for bill_slice in slice_bill(bill, house_move_dates(house)):
+        person_to_slice_cost = bill_slice_personal_costs(bill_slice, house)
+        person_to_cost = sum_dicts(person_to_cost, person_to_slice_cost)
 
     total_personal_costs = sum(person_to_cost.values())
     if round(bill.total_cost, 2) != round(total_personal_costs, 2):
-        raise RuntimeError('bill split failed: total is {0}; split total is {1}'.format(
+        raise RuntimeError('splitting bill failed: total is {0}; split total is {1}'.format(
             bill.total_cost,
             total_personal_costs,
         ))
-
     return person_to_cost
+
+
+def house_move_dates(house):
+    """Return a set of all dates someone moves into or out of a house.
+
+    :type house: House
+    :rtype: set of dates
+    """
+    dates = set()
+    for person in house.people:
+        for residency in person.residencies:
+            dates.add(residency.start)
+            dates.add(residency.end_exclusive)
+    return frozenset(dates)
 
 
 def type_date(d):
@@ -227,7 +341,7 @@ def main(house_fn, bills_fn):
     bills = tuple(type_bill(b) for b in load_yaml(bills_fn)['bills'])
 
     for bill in bills:
-        person_to_cost = calc_all_personal_costs(bill, house)
+        person_to_cost = bill_personal_costs(bill, house)
         print('----')
         print_bill(bill)
         print_person_to_cost(person_to_cost)
