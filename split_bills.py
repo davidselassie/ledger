@@ -340,11 +340,17 @@ def main(house_fn, bills_fn):
     house = type_house(load_yaml(house_fn)['house'])
     bills = tuple(type_bill(b) for b in load_yaml(bills_fn)['bills'])
 
+    person_to_grand_total = {}
     for bill in bills:
         person_to_cost = bill_personal_costs(bill, house)
+        person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
         print('----')
         print_bill(bill)
         print_person_to_cost(person_to_cost)
+
+    print('====')
+    print('Grand Total:')
+    print_person_to_cost(person_to_grand_total)
 
 
 def print_bill(bill):
