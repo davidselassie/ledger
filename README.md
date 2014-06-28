@@ -4,7 +4,7 @@ Tool for spliting up house bills.
 
 Usage
 -----
-Run `python ledger.py HOUSE_YAML BILLS_YAML` to split up a list of bills.
+Run `python split_bills.py HOUSE_YAML BILLS_YAML` to split up a list of bills.
 
 This will figure out who owes what fraction of each bill and output the split. Each bill is split evenly amongs all of the people in the house, based on the fraction of the time of the bill that they were in residence. If person A is in residence the entire duration of a bill, and person B is there only half of the bills time, person A will owe 3/4ths of it and person B 1/4th.
 

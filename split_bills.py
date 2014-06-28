@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.4
-"""USAGE: ledger.py HOUSE_YAML BILLS_YAML
+"""USAGE: split_bills.py HOUSE_YAML BILLS_YAML
 
 Calculate how much each person in a house owes to split a bill evenly
 amongst all people who are living in a house.
