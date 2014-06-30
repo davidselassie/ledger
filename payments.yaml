@@ -1,0 +1,113 @@
+---
+payments:
+  # Aug 2013 - Dec 2013 Spreadsheet
+  - from: David
+    to: Connie
+    paid_on: 2013-12-03
+    amount: 133.00
+  - from: David
+    to: Stubbs
+    paid_on: 2013-12-03
+    amount: 28.00
+  - from: Audrey
+    to: Stubbs
+    paid_on: 2013-12-04
+    amount: 164.00
+  - from: Sima
+    to: Stubbs
+    paid_on: 2013-12-04
+    amount: 157.00
+  - from: Lauth
+    to: Stubbs
+    paid_on: 2013-12-07
+    amount: 164.00
+  - from: Varenhorst
+    to: Stubbs
+    paid_on: 2013-12-07
+    amount: 593.00
+
+  # Jan 2014 - Feb 2014 Spreadsheet; no dates, so guessed
+  - from: Varenhorst
+    to: Stubbs
+    paid_on: 2014-02-01
+    amount: 58.29
+  - from: Sima
+    to: Stubbs
+    paid_on: 2014-02-01
+    amount: 286.73
+  - from: Connie
+    to: Stubbs
+    paid_on: 2014-02-01
+    amount: 74.35
+  - from: David
+    to: Stubbs
+    paid_on: 2014-02-01
+    amount: 286.73
+  - from: Audrey
+    to: Stubbs
+    paid_on: 2014-02-01
+    amount: 286.73
+  - from: Lauth
+    to: Stubbs
+    paid_on: 2014-02-01
+    amount: 286.73
+
+  # April 2014 - May 2014 Spreadsheet
+  - from: Connie
+    to: David
+    paid_on: 2014-05-22
+    amount: 100.01
+  - from: Varenhorst
+    to: David
+    paid_on: 2014-05-22
+    amount: 100.01
+  - from: Audrey
+    to: David
+    paid_on: 2014-05-22
+    amount: 100.01
+  - from: Lauth
+    to: David
+    paid_on: 2014-05-21
+    amount: 100.01
+  - from: Sima
+    to: David
+    paid_on: 2014-05-27
+    amount: 100.01
+
+  # Use of house account
+  - from: Stubbs
+    to: House Acct
+    paid_on: 2014-05-13
+    amount: 68.01
+  - from: Stubbs  # Via David via Venmo
+    to: House Acct
+    paid_on: 2014-05-12
+    amount: 68.01
+  - from: Lauth  # Via David via Venmo
+    to: House Acct
+    paid_on: 2014-05-12
+    amount: 68.01
+  - from: Connie
+    to: House Acct
+    paid_on: 2014-05-12
+    amount: 68.01
+  - from: Audrey
+    to: House Acct
+    paid_on: 2014-05-11
+    amount: 68.01
+  - from: David
+    to: House Acct
+    paid_on: 2014-05-05
+    amount: 63.00
+  - from: Varenhorst
+    to: House Acct
+    paid_on: 2014-05-05
+    amount: 63.00
+  - from: Varenhorst
+    to: House Acct
+    paid_on: 2014-05-13
+    amount: 5.01
+  - from: David
+    to: House Acct
+    paid_on: 2014-05-05
+    amount: 5.01
