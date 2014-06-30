@@ -168,18 +168,33 @@ bills:
     for_dates:
       start: 2013-12-28
       end: 2014-01-28
-  - description: PGE - Stubbs? David?
-    total_cost: 489.83  # Credit payment
+  - description: PGE
+    paid_by: Stubbs
+    total_cost: 129.18  # From 1000 payment for previous month
+    for_dates:  # Duplicate of below because we both contributed
+      start: 2014-01-29
+      end: 2014-02-27
+  - description: PGE
+    paid_by: David
+    total_cost: 360.65  # Rest of that bill
     for_dates:
       start: 2014-01-29
       end: 2014-02-27
-  - description: PGE - David? Stubbs?
+  - description: PGE
+    paid_by: David
     total_cost: 345.38  # Late payment 706.03-360.65
     for_dates:
       start: 2014-02-28
       end: 2014-03-28
-  - description: PGE - House Acct / David
-    total_cost: 355.30
+  - description: PGE
+    paid_by: House Acct
+    total_cost: 316.00
+    for_dates:
+      start: 2014-03-29
+      end: 2014-03-29
+  - description: PGE
+    paid_by: David
+    total_cost: 39.30  # House acct couldn't pay all, paid rest
     for_dates:
       start: 2014-03-29
       end: 2014-04-29
