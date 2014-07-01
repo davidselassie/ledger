@@ -7,6 +7,7 @@ amongst all people who are living in a house.
 See README.md for YAML definitions.
 """
 from collections import namedtuple
+import datetime
 from datetime import date
 from datetime import timedelta
 import yaml
@@ -18,10 +19,25 @@ DateRange = namedtuple('DateRange', (
     'start',
     'end_exclusive',
 ))
+EMPTY_INTERSECTION = DateRange(start=FUTURE, end_exclusive=FUTURE)
 Bill = namedtuple('Bill', (
     'description',
+    'paid_by',
     'for_dates',
-    'total_cost',
+    'amount',
+))
+SharedCost = namedtuple('SharedCost', (
+    'description',
+    'paid_by',
+    'on_date',
+    'shared_amongst',
+    'amount',
+))
+Payment = namedtuple('Payment', (
+    'payer',
+    'to',
+    'on_date',
+    'amount',
 ))
 Person = namedtuple('Person', (
     'name',
@@ -39,28 +55,34 @@ def split_date_range(dr, d):
 
     If the date falls outside the range, then that means no split occurs.
 
-    >>> split_date_range(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)), date(2014, 1, 16))
+    >>> split_date_range(
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)),
+    ... date(2014, 1, 16))
     (DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 2, 1)))
-    >>> split_date_range(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)), date(2014, 3, 1))
+    >>> split_date_range(
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)),
+    ... date(2014, 3, 1))
     (DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 2, 1)),)
 
     :type dr: DateRange
     :type d: date
     :rtype: tuple of DateRanges
     """
-    if d > dr.start and d < dr.end_exclusive:
+    if dr.start < d < dr.end_exclusive:
         return (
             DateRange(start=dr.start, end_exclusive=d),
             DateRange(start=d, end_exclusive=dr.end_exclusive),
         )
     else:
-        return (dr, )
+        return dr,
 
 
 def slice_date_range(dr, ds):
     """Slice up a date range into multiple ones on the given days.
 
-    >>> slice_date_range(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)), frozenset((date(2014, 1, 5), date(2014, 1, 30))))
+    >>> slice_date_range(
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)),
+    ... frozenset((date(2014, 1, 5), date(2014, 1, 30))))
     (DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 5)), DateRange(start=datetime.date(2014, 1, 5), end_exclusive=datetime.date(2014, 1, 30)), DateRange(start=datetime.date(2014, 1, 30), end_exclusive=datetime.date(2014, 2, 1)))
 
     :type dr: DateRange
@@ -81,18 +103,13 @@ def date_range_length(dr):
 
     >>> date_range_length(DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 1)))
     datetime.timedelta(31)
+    >>> date_range_length(DateRange(start=FUTURE, end_exclusive=FUTURE))
+    datetime.timedelta(0)
 
     :type dr: DateRange
     :rtype: timedelta
     """
-    if (
-            dr.start == FUTURE
-            or dr.end_exclusive == FUTURE
-            and not (
-                dr.start == FUTURE
-                and dr.end_exclusive == FUTURE
-            )
-    ):
+    if dr.end_exclusive == FUTURE and dr.start != FUTURE:
         raise ValueError('no length of an unbounded date range')
     return dr.end_exclusive - dr.start
 
@@ -104,18 +121,24 @@ def date_range_intersection(a, b):
     ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)),
     ... DateRange(start=date(2014, 1, 16), end_exclusive=date(2014, 2, 15)))
     DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31))
+    >>> date_range_intersection(
+    ... DateRange(start=date(2014, 1, 2), end_exclusive=date(2014, 1, 2)),
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 2)))
+    DateRange(start=datetime.date(9999, 1, 1), end_exclusive=datetime.date(9999, 1, 1))
+    >>> date_range_intersection(
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 1)),
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 2)))
+    DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 1))
 
     :type a: DateRange
     :type b: DateRange
     :rtype: DateRange
     """
-    i_lb = max(a.start, b.start)
-    i_ub = min(a.end_exclusive, b.end_exclusive)
-    if i_ub >= i_lb:
-        return DateRange(start=i_lb, end_exclusive=i_ub)
+    a, b = sorted((a, b))
+    if b.start != a.start and b.start >= a.end_exclusive:
+        return EMPTY_INTERSECTION
     else:
-        # Return an empty date range.
-        return DateRange(start=i_lb, end_exclusive=i_lb)
+        return DateRange(start=b.start, end_exclusive=min(a.end_exclusive, b.end_exclusive))
 
 
 def date_range_overlap_fraction(a, b):
@@ -125,21 +148,40 @@ def date_range_overlap_fraction(a, b):
     ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)),
     ... DateRange(start=date(2014, 1, 16), end_exclusive=date(2014, 2, 15)))
     0.5
+    >>> date_range_overlap_fraction(
+    ... DateRange(start=date(2014, 1, 2), end_exclusive=date(2014, 1, 2)),
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 2, 3)))
+    1.0
+    >>> date_range_overlap_fraction(
+    ... DateRange(start=date(2014, 1, 2), end_exclusive=date(2014, 1, 2)),
+    ... DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 1)))
+    0.0
 
     :type a: DateRange
     :type b: DateRange
     :rtype: float
     """
     i = date_range_intersection(a, b)
-    return date_range_length(i) / date_range_length(a)
+    if i == a:
+        return 1.0
+    elif i == EMPTY_INTERSECTION:
+        return 0.0
+    else:
+        return date_range_length(i) / date_range_length(a)
 
 
 def slice_bill(bill, ds):
     """Slice a bill into parts based on dates, with each part having the
     cost proportional to its duration.
 
-    >>> slice_bill(Bill(description=None, for_dates=DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)), total_cost=100.0), frozenset((date(2014, 1, 16), )))
-    (Bill(description=None, for_dates=DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), total_cost=50.0), Bill(description=None, for_dates=DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31)), total_cost=50.0))
+    >>> slice_bill(
+    ...     Bill(
+    ...         description=None,
+    ...         paid_by=None,
+    ...         for_dates=DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)),
+    ...         amount=100.0),
+    ...     frozenset((date(2014, 1, 16), )))
+    (Bill(description=None, paid_by=None, for_dates=DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), amount=50.0), Bill(description=None, paid_by=None, for_dates=DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31)), amount=50.0))
 
     :type bill: Bill
     :type ds: iterable of dates
@@ -149,36 +191,37 @@ def slice_bill(bill, ds):
     split_bills = tuple(
         Bill(
             description=bill.description,
+            paid_by=bill.paid_by,
             for_dates=dr,
-            total_cost=bill.total_cost * date_range_overlap_fraction(bill.for_dates, dr),
+            amount=bill.amount * date_range_overlap_fraction(bill.for_dates, dr),
         )
         for dr
         in drs
     )
-    total_split_cost = sum(b.total_cost for b in split_bills)
-    if round(bill.total_cost, 2) != round(total_split_cost, 2):
+    total_split_cost = sum(b.amount for b in split_bills)
+    if round(bill.amount, 2) != round(total_split_cost, 2):
         raise RuntimeError('bill slice failed: total is {0}, slice total is {1}'.format(
-            bill.total_cost,
+            bill.amount,
             total_split_cost,
         ))
     return split_bills
 
 
 def residents_during_date_range(dr, people):
-    """Calculate who was in residence during a date range.
+    """Calculate names of people in residence during a date range.
 
     People must not be in residence for only part of the date range;
     that will raise an exception.
 
     :type dr: DateRange
     :type people: iterable of Persons
-    :rtype: set of Persons
+    :rtype: set of str
     """
     residents = set()
     for person in people:
         fraction_of_dr_in_residency = sum(date_range_overlap_fraction(dr, r) for r in person.residencies)
         if fraction_of_dr_in_residency == 1.0:
-            residents.add(person)
+            residents.add(person.name)
         elif fraction_of_dr_in_residency != 0.0:
             raise RuntimeError('{0} is only in residence for part of {1}'.format(
                 person,
@@ -187,19 +230,21 @@ def residents_during_date_range(dr, people):
     return frozenset(residents)
 
 
-def split_bill_evenly(bill_total_cost, residents):
-    """Given the cost of a bill, split it evenly amongst all people who are
-    currently in residence. Return a dict of what each person owes.
+def split_evenly(amount, among):
+    """Given a cost, split it evenly amongst some people. Return a dict of what each person owes.
 
-    :type bill_total_cost: float in dollars
-    :type residents: iterable of Persons
-    :rtype: dict from Person to float in dollars
+    >>> split_evenly(100.0, ('Bob', 'Alice'))
+    {'Bob': 50.0, 'Alice': 50.0}
+
+    :type amount: float in dollars
+    :type among: iterable of str
+    :rtype: dict from str to float in dollars
     """
-    num_residents = len(residents)
+    num_people = len(among)
     return {
-        person: bill_total_cost / num_residents
+        person: amount / num_people
         for person
-        in residents
+        in among
     }
 
 
@@ -229,8 +274,7 @@ def bill_slice_personal_costs(bill_slice, house):
 
     :type bill_slice: Bill
     :type house: House
-    :rtype: dict from Person to float in dollars
-
+    :rtype: dict from str to float in dollars
     """
     residents_during_slice = residents_during_date_range(
         bill_slice.for_dates,
@@ -241,14 +285,14 @@ def bill_slice_personal_costs(bill_slice, house):
             bill_slice.for_dates,
         ))
 
-    person_to_slice_cost = split_bill_evenly(
-        bill_slice.total_cost,
+    person_to_slice_cost = split_evenly(
+        bill_slice.amount,
         residents_during_slice,
     )
     total_personal_slice_costs = sum(person_to_slice_cost.values())
-    if round(bill_slice.total_cost, 2) != round(total_personal_slice_costs, 2):
+    if round(bill_slice.amount, 2) != round(total_personal_slice_costs, 2):
         raise RuntimeError('splitting bill slice failed: slice total is {0}; split slice total is {1}'.format(
-            bill_slice.total_cost,
+            bill_slice.amount,
             total_personal_slice_costs,
         ))
     return person_to_slice_cost
@@ -260,20 +304,33 @@ def bill_personal_costs(bill, house):
 
     :type bill: Bill
     :type house: House
-    :rtype: dict from Person to float in dollars
+    :rtype: dict from str to float in dollars
     """
-    person_to_cost = {}
+    person_to_cost = {bill.paid_by: -bill.amount}
     for bill_slice in slice_bill(bill, house_move_dates(house)):
         person_to_slice_cost = bill_slice_personal_costs(bill_slice, house)
         person_to_cost = sum_dicts(person_to_cost, person_to_slice_cost)
 
     total_personal_costs = sum(person_to_cost.values())
-    if round(bill.total_cost, 2) != round(total_personal_costs, 2):
-        raise RuntimeError('splitting bill failed: total is {0}; split total is {1}'.format(
-            bill.total_cost,
-            total_personal_costs,
+    if round(total_personal_costs, 2) != 0.0:
+        raise RuntimeError('splitting bill failed: total is {0}; split is {1!r}'.format(
+            bill.amount,
+            person_to_cost,
         ))
     return person_to_cost
+
+
+def shared_personal_costs(shared_cost):
+    person_to_cost = {shared_cost.paid_by: -shared_cost.amount}
+    person_to_shared_cost = split_evenly(shared_cost.amount, shared_cost.shared_amongst)
+    return sum_dicts(person_to_cost, person_to_shared_cost)
+
+
+def make_payment(payment):
+    return {
+        payment.payer: -payment.amount,
+        payment.to: payment.amount,
+    }
 
 
 def house_move_dates(house):
@@ -301,9 +358,11 @@ def type_date_range(d):
     start_date = type_date(d['start'])
     if 'end' not in d and 'end_exclusive' not in d:
         end_date = FUTURE
-    if 'end' in d:
+    elif 'end' in d and 'end_exclusive' in d:
+        raise ValueError('date range has both end and end_exclusive')
+    elif 'end' in d:
         end_date = type_date(d['end']) + timedelta(days=1)
-    elif 'end_exclusive' in d:
+    else:
         end_date = type_date(d['end_exclusive'])
     return DateRange(start=start_date, end_exclusive=end_date)
 
@@ -316,10 +375,37 @@ def type_person(d):
 
 
 def type_bill(d):
+    if 'for_dates' in d and 'on_date' in d:
+        raise ValueError('bill has both for_dates and on_date specified')
+    if 'on_date' in d:
+        dr_date = type_date(d['on_date'])
+        dr = DateRange(start=dr_date, end_exclusive=dr_date)
+    else:
+        dr = type_date_range(d['for_dates'])
     return Bill(
         description=d['description'],
-        for_dates=type_date_range(d['for_dates']),
-        total_cost=float(d['total_cost']),
+        paid_by=d['paid_by'],
+        for_dates=dr,
+        amount=float(d['amount']),
+    )
+
+
+def type_shared_cost(d):
+    return SharedCost(
+        description=d['description'],
+        paid_by=d['paid_by'],
+        shared_amongst=d['shared_amongst'],
+        amount=float(d['amount']),
+        on_date=type_date(d['on_date']),
+    )
+
+
+def type_payment(d):
+    return Payment(
+        payer=d['payer'],
+        to=d['to'],
+        on_date=type_date(d['on_date']),
+        amount=float(d['amount']),
     )
 
 
@@ -336,9 +422,11 @@ def load_yaml(fn):
         return yaml.safe_load(fp)
 
 
-def main(house_fn, bills_fn):
+def main(house_fn, bills_fn, shared_costs_fn, payments_fn):
     house = type_house(load_yaml(house_fn)['house'])
     bills = tuple(type_bill(b) for b in load_yaml(bills_fn)['bills'])
+    shared_costs = tuple(type_shared_cost(c) for c in load_yaml(shared_costs_fn)['shared_costs'])
+    payments = tuple(type_payment(p) for p in load_yaml(payments_fn)['payments'])
 
     person_to_grand_total = {}
     for bill in bills:
@@ -347,28 +435,59 @@ def main(house_fn, bills_fn):
         print('----')
         print_bill(bill)
         print_person_to_cost(person_to_cost)
+    for shared_cost in shared_costs:
+        person_to_cost = shared_personal_costs(shared_cost)
+        person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
+        print('----')
+        print_shared_cost(shared_cost)
+        print_person_to_cost(person_to_cost)
+    for payment in payments:
+        person_to_cost = make_payment(payment)
+        person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
+        print('----')
+        print_payment(payment)
 
     print('====')
     print('Grand Total:')
     print_person_to_cost(person_to_grand_total)
+    if round(sum(person_to_grand_total.values()), 2) != 0.0:
+        raise RuntimeError('grand total does not check out')
 
 
 def print_bill(bill):
-    print('For {0!r} from {1} to {2} totalling ${3:.2f}:'.format(
+    print('For {0!r} from {1} to {2} totalling ${3:.2f} (paid by {4}):'.format(
         bill.description,
         bill.for_dates.start,
         bill.for_dates.end_exclusive - timedelta(days=1),
-        bill.total_cost,
+        bill.amount,
+        bill.paid_by,
+    ))
+
+
+def print_shared_cost(shared_cost):
+    print('For {0!r} totalling ${1:.2f} shared amongst {2} (paid by {3})'.format(
+        shared_cost.description,
+        shared_cost.amount,
+        ', '.join(shared_cost.shared_amongst),
+        shared_cost.paid_by,
+    ))
+
+
+def print_payment(payment):
+    print('Payment from {0} to {1} of ${2:.2f}'.format(
+        payment.payer,
+        payment.to,
+        payment.amount,
     ))
 
 
 def print_person_to_cost(person_to_cost):
     print('Costs:')
     for person, cost in sorted(person_to_cost.items()):
-        if cost > 0.0:
-            print('  {0}: ${1:.2f}'.format(person.name, cost))
+        if cost != 0.0:
+            print('  {0}: ${1:.2f}'.format(person.name if isinstance(person, Person) else person, cost))
 
 
 if __name__ == '__main__':
-    house_fn, bills_fn = sys.argv[1:]
-    main(house_fn, bills_fn)
+    house_fn, bills_fn, shared_costs_fn, payments_fn = sys.argv[1:]
+    main(house_fn, bills_fn, shared_costs_fn, payments_fn)

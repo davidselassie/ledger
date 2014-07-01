@@ -1,113 +1,117 @@
 ---
 payments:
   # Aug 2013 - Dec 2013 Spreadsheet
-  - from: David
+  - payer: David
     to: Connie
-    paid_on: 2013-12-03
+    on_date: 2013-12-03
     amount: 133.00
-  - from: David
+  - payer: David
     to: Stubbs
-    paid_on: 2013-12-03
+    on_date: 2013-12-03
     amount: 28.00
-  - from: Audrey
+  - payer: Audrey
     to: Stubbs
-    paid_on: 2013-12-04
+    on_date: 2013-12-04
     amount: 164.00
-  - from: Sima
+  - payer: Sima
     to: Stubbs
-    paid_on: 2013-12-04
+    on_date: 2013-12-04
     amount: 157.00
-  - from: Lauth
+  - payer: Lauth
     to: Stubbs
-    paid_on: 2013-12-07
+    on_date: 2013-12-07
     amount: 164.00
-  - from: Varenhorst
+  - payer: Varenhorst
     to: Stubbs
-    paid_on: 2013-12-07
+    on_date: 2013-12-07
     amount: 593.00
 
   # Jan 2014 - Feb 2014 Spreadsheet; no dates, so guessed
-  - from: Varenhorst
+  - payer: Varenhorst
     to: Stubbs
-    paid_on: 2014-02-01
+    on_date: 2014-02-01
     amount: 58.29
-  - from: Sima
+  - payer: Sima
     to: Stubbs
-    paid_on: 2014-02-01
+    on_date: 2014-02-01
     amount: 286.73
-  - from: Connie
+  - payer: Connie
     to: Stubbs
-    paid_on: 2014-02-01
+    on_date: 2014-02-01
     amount: 74.35
-  - from: David
+  - payer: David
     to: Stubbs
-    paid_on: 2014-02-01
+    on_date: 2014-02-01
     amount: 286.73
-  - from: Audrey
+  - payer: Audrey
     to: Stubbs
-    paid_on: 2014-02-01
+    on_date: 2014-02-01
     amount: 286.73
-  - from: Lauth
+  - payer: Lauth
     to: Stubbs
-    paid_on: 2014-02-01
+    on_date: 2014-02-01
     amount: 286.73
 
   # April 2014 - May 2014 Spreadsheet
-  - from: Connie
+  - payer: Connie
     to: David
-    paid_on: 2014-05-22
+    on_date: 2014-05-22
     amount: 100.01
-  - from: Varenhorst
+  - payer: Varenhorst
     to: David
-    paid_on: 2014-05-22
+    on_date: 2014-05-22
     amount: 100.01
-  - from: Audrey
+  - payer: Audrey
     to: David
-    paid_on: 2014-05-22
+    on_date: 2014-05-22
     amount: 100.01
-  - from: Lauth
+  - payer: Lauth
     to: David
-    paid_on: 2014-05-21
+    on_date: 2014-05-21
     amount: 100.01
-  - from: Sima
+  - payer: Sima
     to: David
-    paid_on: 2014-05-27
+    on_date: 2014-05-27
     amount: 100.01
 
   # Use of house account
-  - from: Stubbs
+  - payer: Stubbs  # Via David via Venmo
     to: House Acct
-    paid_on: 2014-05-13
+    on_date: 2014-05-12
     amount: 68.01
-  - from: Stubbs  # Via David via Venmo
+  - payer: Lauth  # Via David via Venmo
     to: House Acct
-    paid_on: 2014-05-12
+    on_date: 2014-05-12
     amount: 68.01
-  - from: Lauth  # Via David via Venmo
+  - payer: Connie
     to: House Acct
-    paid_on: 2014-05-12
+    on_date: 2014-05-12
     amount: 68.01
-  - from: Connie
+  - payer: Audrey
     to: House Acct
-    paid_on: 2014-05-12
+    on_date: 2014-05-11
     amount: 68.01
-  - from: Audrey
+  - payer: David
     to: House Acct
-    paid_on: 2014-05-11
-    amount: 68.01
-  - from: David
-    to: House Acct
-    paid_on: 2014-05-05
+    on_date: 2014-05-05
     amount: 63.00
-  - from: Varenhorst
+  - payer: Varenhorst
     to: House Acct
-    paid_on: 2014-05-05
+    on_date: 2014-05-05
     amount: 63.00
-  - from: Varenhorst
+  - payer: Varenhorst
     to: House Acct
-    paid_on: 2014-05-13
+    on_date: 2014-05-13
     amount: 5.01
-  - from: David
+  - payer: David
     to: House Acct
-    paid_on: 2014-05-05
+    on_date: 2014-05-05
     amount: 5.01
+  - payer: David  # Opening account deposit
+    to: House Acct
+    on_date: 2014-04-19
+    amount: 20.00
+  - payer: David  # Test Square Cash deposit
+    to: House Acct
+    on_date: 2014-05-05
+    amount: 10.00
