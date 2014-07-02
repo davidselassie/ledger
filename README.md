@@ -1,12 +1,25 @@
 housecash
 =========
-Tool for spliting up house bills.
+Tool for splitting up house expenses.
 
 Usage
 -----
-Run `python split_bills.py HOUSE_YAML BILLS_YAML` to split up a list of bills.
+Run `python ledger.py HOUSE_YAML` to split up a list of expenses.
 
-This will figure out who owes what fraction of each bill and output the split. Each bill is split evenly amongs all of the people in the house, based on the fraction of the time of the bill that they were in residence. If person A is in residence the entire duration of a bill, and person B is there only half of the bills time, person A will owe 3/4ths of it and person B 1/4th.
+This will figure out who owes what fraction of each expense and output the split. There are a few types of expenses you can log.
+
+Expense Types
+-------------
+### Bills
+Each bill is split evenly amongst all of the people in the house, based on the fraction of the time of the bill that they were in residence. A bill can also be for a single moment in time, in which case it's shared amongst all people who live in the house that day equally.
+
+If person A is in residence the entire duration of a bill, and person B is there only half of the bills time, person A will owe 3/4ths of it and person B 1/4th.
+
+### Shared Costs
+Shared costs are split evenly amongst a set list of people.
+
+### Payments
+Payments log the transfer of money from one person to another. You use them to pay off dues.
 
 House Definition
 ----------------
@@ -46,16 +59,42 @@ house:
         - start: 2014-08-06
 ```
 
-Bill Definition
----------------
-The bill YAML is a list of bills. Each bill has a `description`, a `total_cost` in dollars, and `for_dates` which is a single date range.
+Expense Definitions
+-------------------
+Expenses are listed in a `ledger` in the house YAML.
 
-### Example Bills
+### Bills
+Each bill has a `description`, the name of the person `paid_by`, an `amount` in dollars, and `for_dates` which is a single date range or `on_date` which is a single day.
+
 ```yaml
-bills:
+bill:
   - description: Garbage
-    total_cost: 178.08
+    paid_by: Stubbs
+    amount: 178.08
     for_dates:
       start: 2014-03-31
       end: 2014-06-14
+```
+
+### Shared Costs
+Each shared cost has a `description`, the name of the person `paid_by`, an `amount` in dollars, and `on_date` which is a single day, and a list of names of people the cost was `shared_amongst`.
+
+```yaml
+shared_cost:
+  - description: Dinner
+    paid_by: David
+    total_cost: 51.00
+    shared_amongst: [David, Stubbs]
+    on_day: 2014-04-15
+```
+
+### Payment
+Each payment has the name of the `payer`, the name of the person paid `to`, the `amount`, and the `on_date` it was paid.
+
+```yaml
+payment:
+  - payer: David
+    to: Stubbs
+    total_cost: 10.00
+    on_day: 2014-04-15
 ```
