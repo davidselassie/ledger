@@ -426,7 +426,7 @@ ledger:
       shared_amongst: [Connie, Stubbs, David]
       on_date: 2013-09-29
   - shared_cost:
-      description: Shandong takeou
+      description: Shandong takeout
       paid_by: Connie
       amount: 49.00
       shared_amongst: [Varenhorst, Connie, Stubbs, David]

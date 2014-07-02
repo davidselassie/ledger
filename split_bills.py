@@ -195,16 +195,17 @@ def slice_bill(bill, ds):
         for dr
         in drs
     )
+
     total_split_cost = sum(b.amount for b in split_bills)
     if round(bill.amount, 2) != round(total_split_cost, 2):
-        raise RuntimeError('bill slice failed: total is {0}, slice total is {1}'.format(
+        raise RuntimeError('slicing bill failed: total is {0}, slices are {1!r}'.format(
             bill.amount,
-            total_split_cost,
+            tuple(b.amount for b in split_bills),
         ))
     return split_bills
 
 
-def residents_during_date_range(dr, people):
+def resident_names_during_date_range(dr, people):
     """Calculate names of people in residence during a date range.
 
     People must not be in residence for only part of the date range;
@@ -214,35 +215,43 @@ def residents_during_date_range(dr, people):
     :type people: iterable of Persons
     :rtype: set of str
     """
-    residents = set()
+    resident_names = set()
     for person in people:
         fraction_of_dr_in_residency = sum(date_range_overlap_fraction(dr, r) for r in person.residencies)
         if fraction_of_dr_in_residency == 1.0:
-            residents.add(person.name)
+            resident_names.add(person.name)
         elif fraction_of_dr_in_residency != 0.0:
             raise RuntimeError('{0} is only in residence for part of {1}'.format(
                 person,
                 dr,
             ))
-    return frozenset(residents)
+    return frozenset(resident_names)
 
 
-def split_evenly(amount, among):
-    """Given a cost, split it evenly amongst some people. Return a dict of what each person owes.
+def split_evenly(amount, among_names):
+    """Given an amount, split it evenly amongst some people. Return a dict of what each person owes.
 
-    >>> split_evenly(100.0, ('Bob', 'Alice'))
-    {'Bob': 50.0, 'Alice': 50.0}
+    >>> sorted(split_evenly(100.0, ('Bob', 'Alice')).items())
+    [('Alice', 50.0), ('Bob', 50.0)]
 
     :type amount: float in dollars
-    :type among: iterable of str
+    :type among_names: iterable of str
     :rtype: dict from str to float in dollars
     """
-    num_people = len(among)
-    return {
+    num_people = len(among_names)
+    name_to_dues = {
         person: amount / num_people
         for person
-        in among
+        in among_names
     }
+
+    total_dues = sum(name_to_dues.values())
+    if round(total_dues, 2) != round(amount, 2):
+        raise RuntimeError('splitting amount failed: amount is {0}; dues are {1!r}'.format(
+            amount,
+            name_to_dues,
+        ))
+    return name_to_dues
 
 
 def sum_dicts(a, b):
@@ -273,29 +282,30 @@ def bill_slice_personal_costs(bill_slice, house):
     :type house: House
     :rtype: dict from str to float in dollars
     """
-    residents_during_slice = residents_during_date_range(
+    resident_names_during_slice = resident_names_during_date_range(
         bill_slice.for_dates,
         house.people,
     )
-    if len(residents_during_slice) < house.min_people:
+    if len(resident_names_during_slice) < house.min_people:
         raise ValueError('house is under-rented during {0}'.format(
             bill_slice.for_dates,
         ))
 
-    person_to_slice_cost = split_evenly(
+    name_to_dues = split_evenly(
         bill_slice.amount,
-        residents_during_slice,
+        resident_names_during_slice,
     )
-    total_personal_slice_costs = sum(person_to_slice_cost.values())
-    if round(bill_slice.amount, 2) != round(total_personal_slice_costs, 2):
-        raise RuntimeError('splitting bill slice failed: slice total is {0}; split slice total is {1}'.format(
+
+    total_dues = sum(name_to_dues.values())
+    if round(bill_slice.amount, 2) != round(total_dues, 2):
+        raise RuntimeError('splitting bill slice failed: total is {0}; dues are {1!r}'.format(
             bill_slice.amount,
-            total_personal_slice_costs,
+            name_to_dues,
         ))
-    return person_to_slice_cost
+    return name_to_dues
 
 
-def bill_personal_costs(bill, house):
+def dues_for_bill(bill, house):
     """Calculate what dollar amounts of a bill are owed by all people in the
     house.
 
@@ -303,31 +313,57 @@ def bill_personal_costs(bill, house):
     :type house: House
     :rtype: dict from str to float in dollars
     """
-    person_to_cost = {bill.paid_by: -bill.amount}
+    name_to_dues = {bill.paid_by: -bill.amount}
     for bill_slice in slice_bill(bill, house_move_dates(house)):
-        person_to_slice_cost = bill_slice_personal_costs(bill_slice, house)
-        person_to_cost = sum_dicts(person_to_cost, person_to_slice_cost)
+        name_to_dues_for_slice = bill_slice_personal_costs(bill_slice, house)
+        name_to_dues = sum_dicts(name_to_dues, name_to_dues_for_slice)
 
-    total_personal_costs = sum(person_to_cost.values())
-    if round(total_personal_costs, 2) != 0.0:
-        raise RuntimeError('splitting bill failed: total is {0}; split is {1!r}'.format(
+    total_dues = sum(name_to_dues.values())
+    if round(total_dues, 2) != 0.0:
+        raise RuntimeError('splitting bill failed: total is {0}; dues are {1!r}'.format(
             bill.amount,
-            person_to_cost,
+            name_to_dues,
         ))
-    return person_to_cost
+    return name_to_dues
 
 
-def shared_personal_costs(shared_cost):
-    person_to_cost = {shared_cost.paid_by: -shared_cost.amount}
-    person_to_shared_cost = split_evenly(shared_cost.amount, shared_cost.shared_amongst)
-    return sum_dicts(person_to_cost, person_to_shared_cost)
+def dues_for_personal_cost(shared_cost):
+    """Calculate what dollar amounts of a shared cost are owed by those who shared it.
+
+    :type shared_cost: SharedCost
+    :rtype: dict from str to float in dollars
+    """
+    name_to_dues = {shared_cost.paid_by: -shared_cost.amount}
+    name_to_dues_for_shared_cost = split_evenly(shared_cost.amount, shared_cost.shared_amongst)
+    name_to_dues = sum_dicts(name_to_dues, name_to_dues_for_shared_cost)
+
+    total_dues = sum(name_to_dues.values())
+    if round(total_dues, 2) != 0.0:
+        raise RuntimeError('splitting shared cost failed: total is {0}; dues are {1!r}'.format(
+            shared_cost.amount,
+            name_to_dues,
+        ))
+    return name_to_dues
 
 
-def make_payment(payment):
-    return {
+def dues_for_payment(payment):
+    """Convert a payment into dues.
+
+    :type payment: Payment
+    :rtype: dict from str to float in dollars
+    """
+    name_to_dues = {
         payment.payer: -payment.amount,
         payment.to: payment.amount,
     }
+
+    total_dues = sum(name_to_dues.values())
+    if round(total_dues, 2) != 0.0:
+        raise RuntimeError('splitting payment failed: total is {0}; dues are {1!r}'.format(
+            payment.amount,
+            name_to_dues,
+        ))
+    return name_to_dues
 
 
 def house_move_dates(house):
@@ -356,7 +392,7 @@ def type_date_range(d):
     if 'end' not in d and 'end_exclusive' not in d:
         end_date = FUTURE
     elif 'end' in d and 'end_exclusive' in d:
-        raise ValueError('date range has both end and end_exclusive')
+        raise ValueError("date range has both 'end' and 'end_exclusive'")
     elif 'end' in d:
         end_date = type_date(d['end']) + timedelta(days=1)
     else:
@@ -373,7 +409,7 @@ def type_person(d):
 
 def type_bill(d):
     if 'for_dates' in d and 'on_date' in d:
-        raise ValueError('bill has both for_dates and on_date specified')
+        raise ValueError("bill has both 'for_dates' and 'on_date'")
     if 'on_date' in d:
         dr_date = type_date(d['on_date'])
         dr = DateRange(start=dr_date, end_exclusive=dr_date)
@@ -439,27 +475,27 @@ def main(in_fn):
     house = type_house(in_f_d['house'])
     ledger = tuple(type_ledger(in_f_d['ledger']))
 
-    person_to_grand_total = {}
+    name_to_total_dues = {}
     for i in ledger:
         if isinstance(i, Bill):
             print_bill(i)
-            person_to_cost = bill_personal_costs(i, house)
+            name_to_dues_for_i = dues_for_bill(i, house)
         elif isinstance(i, SharedCost):
             print_shared_cost(i)
-            person_to_cost = shared_personal_costs(i)
+            name_to_dues_for_i = dues_for_personal_cost(i)
         elif isinstance(i, Payment):
             print_payment(i)
-            person_to_cost = make_payment(i)
+            name_to_dues_for_i = dues_for_payment(i)
         else:
             raise TypeError('unknown ledger item type {0!r}'.format(type(i)))
-        person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
-        print_person_to_cost(person_to_cost)
+        name_to_total_dues = sum_dicts(name_to_total_dues, name_to_dues_for_i)
+        print_name_to_dues(name_to_dues_for_i)
         print('----')
 
     print('====')
-    print('Grand Total:')
-    print_person_to_cost(person_to_grand_total)
-    if round(sum(person_to_grand_total.values()), 2) != 0.0:
+    print('Total Dues:')
+    print_name_to_dues(name_to_total_dues)
+    if round(sum(name_to_total_dues.values()), 2) != 0.0:
         raise RuntimeError('grand total does not check out')
 
 
@@ -490,11 +526,11 @@ def print_payment(payment):
     ))
 
 
-def print_person_to_cost(person_to_cost):
-    print('Costs:')
-    for person, cost in sorted(person_to_cost.items()):
-        if cost != 0.0:
-            print('  {0}: ${1:.2f}'.format(person, cost))
+def print_name_to_dues(name_to_dues):
+    print('Dues:')
+    for name, dues in sorted(name_to_dues.items()):
+        if dues != 0.0:
+            print('  {0}: ${1:.2f}'.format(name, dues))
 
 
 if __name__ == '__main__':
