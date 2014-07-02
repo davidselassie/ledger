@@ -422,7 +422,7 @@ def load_yaml(fn):
         return yaml.safe_load(fp)
 
 
-def main(house_fn, bills_fn, shared_costs_fn, payments_fn):
+def main(house_fn):
     house = type_house(load_yaml(house_fn)['house'])
     bills = tuple(type_bill(b) for b in load_yaml(bills_fn)['bills'])
     shared_costs = tuple(type_shared_cost(c) for c in load_yaml(shared_costs_fn)['shared_costs'])
@@ -489,5 +489,5 @@ def print_person_to_cost(person_to_cost):
 
 
 if __name__ == '__main__':
-    house_fn, bills_fn, shared_costs_fn, payments_fn = sys.argv[1:]
-    main(house_fn, bills_fn, shared_costs_fn, payments_fn)
+    house_fn = sys.argv[1]
+    main(house_fn)
