@@ -1,8 +1,5 @@
 #!/usr/bin/env python3.4
-"""USAGE: split_bills.py HOUSE_YAML BILLS_YAML
-
-Calculate how much each person in a house owes to split a bill evenly
-amongst all people who are living in a house.
+"""USAGE: split_bills.py HOUSE_YAML
 
 See README.md for YAML definitions.
 """
@@ -409,6 +406,21 @@ def type_payment(d):
     )
 
 
+def type_ledger(d):
+    for i in d:
+        if len(i) > 1:
+            raise ValueError('ledger item has multiple types {0!r}'.format(i.keys()))
+        (ik, iv), *_ = i.items()
+        if ik == 'bill':
+            yield type_bill(iv)
+        elif ik == 'shared_cost':
+            yield type_shared_cost(iv)
+        elif ik == 'payment':
+            yield type_payment(iv)
+        else:
+            raise TypeError('unknown ledger item type {0!r}'.format(ik))
+
+
 def type_house(d):
     return House(
         name=d['name'],
@@ -422,30 +434,27 @@ def load_yaml(fn):
         return yaml.safe_load(fp)
 
 
-def main(house_fn):
-    house = type_house(load_yaml(house_fn)['house'])
-    bills = tuple(type_bill(b) for b in load_yaml(bills_fn)['bills'])
-    shared_costs = tuple(type_shared_cost(c) for c in load_yaml(shared_costs_fn)['shared_costs'])
-    payments = tuple(type_payment(p) for p in load_yaml(payments_fn)['payments'])
+def main(in_fn):
+    in_f_d = load_yaml(in_fn)
+    house = type_house(in_f_d['house'])
+    ledger = tuple(type_ledger(in_f_d['ledger']))
 
     person_to_grand_total = {}
-    for bill in bills:
-        person_to_cost = bill_personal_costs(bill, house)
+    for i in ledger:
+        if isinstance(i, Bill):
+            print_bill(i)
+            person_to_cost = bill_personal_costs(i, house)
+        elif isinstance(i, SharedCost):
+            print_shared_cost(i)
+            person_to_cost = shared_personal_costs(i)
+        elif isinstance(i, Payment):
+            print_payment(i)
+            person_to_cost = make_payment(i)
+        else:
+            raise TypeError('unknown ledger item type {0!r}'.format(type(i)))
         person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
-        print('----')
-        print_bill(bill)
         print_person_to_cost(person_to_cost)
-    for shared_cost in shared_costs:
-        person_to_cost = shared_personal_costs(shared_cost)
-        person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
         print('----')
-        print_shared_cost(shared_cost)
-        print_person_to_cost(person_to_cost)
-    for payment in payments:
-        person_to_cost = make_payment(payment)
-        person_to_grand_total = sum_dicts(person_to_grand_total, person_to_cost)
-        print('----')
-        print_payment(payment)
 
     print('====')
     print('Grand Total:')
@@ -455,17 +464,17 @@ def main(house_fn):
 
 
 def print_bill(bill):
-    print('For {0!r} from {1} to {2} totalling ${3:.2f} (paid by {4}):'.format(
+    print('Bill for {0!r} from {1} until {2} totalling ${3:.2f} paid by {4}'.format(
         bill.description,
         bill.for_dates.start,
-        bill.for_dates.end_exclusive - timedelta(days=1),
+        bill.for_dates.end_exclusive,
         bill.amount,
         bill.paid_by,
     ))
 
 
 def print_shared_cost(shared_cost):
-    print('For {0!r} totalling ${1:.2f} shared amongst {2} (paid by {3})'.format(
+    print('Cost of {0!r} totalling ${1:.2f} shared amongst {2} paid by {3}'.format(
         shared_cost.description,
         shared_cost.amount,
         ', '.join(shared_cost.shared_amongst),
@@ -485,7 +494,7 @@ def print_person_to_cost(person_to_cost):
     print('Costs:')
     for person, cost in sorted(person_to_cost.items()):
         if cost != 0.0:
-            print('  {0}: ${1:.2f}'.format(person.name if isinstance(person, Person) else person, cost))
+            print('  {0}: ${1:.2f}'.format(person, cost))
 
 
 if __name__ == '__main__':

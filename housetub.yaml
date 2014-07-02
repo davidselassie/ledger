@@ -53,531 +53,531 @@ house:
           end_exclusive: 2014-08-01
 
 
-  ledger:
-    # Varenhorst paid: 118.73 + 178.08 * 3 = 652.97
-    - bill:
-        description: Garbage
-        paid_by: Varenhorst
-        amount: 118.73
-        for_dates:
-          start: 2013-08-01
-          end_exclusive: 2013-09-30
-    - bill:
-        description: Garbage
-        paid_by: Varenhorst
-        amount: 178.08
-        for_dates:
-          start: 2013-09-30
-          end_exclusive: 2013-12-31
-    - bill:
-        description: Garbage
-        paid_by: Varenhorst
-        amount: 178.08
-        for_dates:
-          start: 2013-12-31
-          end_exclusive: 2014-03-31
-    - bill:
-        description: Garbage
-        paid_by: Varenhorst
-        amount: 178.08
-        for_dates:
-          start: 2014-03-31
-          end_exclusive: 2014-06-30
+ledger:
+  # Varenhorst paid: 118.73 + 178.08 * 3 = 652.97
+  - bill:
+      description: Garbage
+      paid_by: Varenhorst
+      amount: 118.73
+      for_dates:
+        start: 2013-08-01
+        end_exclusive: 2013-09-30
+  - bill:
+      description: Garbage
+      paid_by: Varenhorst
+      amount: 178.08
+      for_dates:
+        start: 2013-09-30
+        end_exclusive: 2013-12-31
+  - bill:
+      description: Garbage
+      paid_by: Varenhorst
+      amount: 178.08
+      for_dates:
+        start: 2013-12-31
+        end_exclusive: 2014-03-31
+  - bill:
+      description: Garbage
+      paid_by: Varenhorst
+      amount: 178.08
+      for_dates:
+        start: 2014-03-31
+        end_exclusive: 2014-06-30
 
-    # Stubbs paid: 319.80 + 120.80 * 7 + 127.70 = 1293.10
-    # David paid: 154.30
-    # House Acct paid: 120.80
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 319.80
-        for_dates:
-          start: 2013-08-08
-          end: 2013-09-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80  # Late payment broken out
-        for_dates:
-          start: 2013-09-08
-          end: 2013-10-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 127.70  # Credit payment
-        for_dates:
-          start: 2013-10-08
-          end: 2013-11-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80
-        for_dates:
-          start: 2013-11-08
-          end: 2013-12-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80
-        for_dates:
-          start: 2013-12-08
-          end: 2014-01-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80
-        for_dates:
-          start: 2014-01-08
-          end: 2014-02-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80
-        for_dates:
-          start: 2014-02-08
-          end: 2014-03-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80
-        for_dates:
-          start: 2014-03-08
-          end: 2014-04-07
-    - bill:
-        description: Comcast
-        paid_by: Stubbs
-        amount: 120.80
-        for_dates:
-          start: 2014-04-08
-          end: 2014-05-07
-    - bill:
-        description: Comcast
-        paid_by: House Acct
-        amount: 120.80
-        for_dates:
-          start: 2014-05-08
-          end: 2014-06-07
-    - bill:
-        description: Comcast
-        paid_by: David
-        amount: 154.30  # Late payment broken out
-        for_dates:
-          start: 2014-06-08
-          end: 2014-07-07
+  # Stubbs paid: 319.80 + 120.80 * 7 + 127.70 = 1293.10
+  # David paid: 154.30
+  # House Acct paid: 120.80
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 319.80
+      for_dates:
+        start: 2013-08-08
+        end: 2013-09-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80  # Late payment broken out
+      for_dates:
+        start: 2013-09-08
+        end: 2013-10-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 127.70  # Credit payment
+      for_dates:
+        start: 2013-10-08
+        end: 2013-11-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80
+      for_dates:
+        start: 2013-11-08
+        end: 2013-12-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80
+      for_dates:
+        start: 2013-12-08
+        end: 2014-01-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80
+      for_dates:
+        start: 2014-01-08
+        end: 2014-02-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80
+      for_dates:
+        start: 2014-02-08
+        end: 2014-03-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80
+      for_dates:
+        start: 2014-03-08
+        end: 2014-04-07
+  - bill:
+      description: Comcast
+      paid_by: Stubbs
+      amount: 120.80
+      for_dates:
+        start: 2014-04-08
+        end: 2014-05-07
+  - bill:
+      description: Comcast
+      paid_by: House Acct
+      amount: 120.80
+      for_dates:
+        start: 2014-05-08
+        end: 2014-06-07
+  - bill:
+      description: Comcast
+      paid_by: David
+      amount: 154.30  # Late payment broken out
+      for_dates:
+        start: 2014-06-08
+        end: 2014-07-07
 
-    # Connie paid: 163.44 + 406.60 + 170.45 = 740.49
-    # David paid: 211.68
-    - bill:
-        description: EBMUD
-        paid_by: Connie
-        amount: 163.44
-        for_dates:
-          start: 2013-08-21
-          end_exclusive: 2013-10-14
-    - bill:
-        description: EBMUD
-        paid_by: Connie
-        amount: 204.65
-        for_dates:
-          start: 2013-10-14
-          end_exclusive: 2013-12-15
-    - bill:
-        description: EBMUD
-        paid_by: Connie
-        amount: 201.95  # Late payment 406.60-204.65
-        for_dates:
-          start: 2013-12-15
-          end_exclusive: 2014-02-13
-    - bill:
-        description: EBMUD
-        paid_by: Connie
-        amount: 170.45
-        for_dates:
-          start: 2014-02-13
-          end_exclusive: 2014-04-16
-    - bill:
-        description: EBMUD
-        paid_by: David
-        amount: 211.68
-        for_dates:
-          start: 2014-04-16
-          end: 2014-06-13
+  # Connie paid: 163.44 + 406.60 + 170.45 = 740.49
+  # David paid: 211.68
+  - bill:
+      description: EBMUD
+      paid_by: Connie
+      amount: 163.44
+      for_dates:
+        start: 2013-08-21
+        end_exclusive: 2013-10-14
+  - bill:
+      description: EBMUD
+      paid_by: Connie
+      amount: 204.65
+      for_dates:
+        start: 2013-10-14
+        end_exclusive: 2013-12-15
+  - bill:
+      description: EBMUD
+      paid_by: Connie
+      amount: 201.95  # Late payment 406.60-204.65
+      for_dates:
+        start: 2013-12-15
+        end_exclusive: 2014-02-13
+  - bill:
+      description: EBMUD
+      paid_by: Connie
+      amount: 170.45
+      for_dates:
+        start: 2014-02-13
+        end_exclusive: 2014-04-16
+  - bill:
+      description: EBMUD
+      paid_by: David
+      amount: 211.68
+      for_dates:
+        start: 2014-04-16
+        end: 2014-06-13
 
-    # Stubbs paid: 474.35 - 295.00 (deposit) + 700.00 + 1000.00 = 1879.35
-    # David paid: 706.03 + 344.98 = 1051.01
-    # House Acct paid: 316.00
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 100.95  # Late payment 395.95-295
-        for_dates:
-          start: 2013-08-04
-          end: 2013-08-27
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 78.04  # Late payment 474.35-395.95
-        for_dates:
-          start: 2013-08-28
-          end: 2013-09-26
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 167.28
-        for_dates:
-          start: 2013-09-27
-          end: 2013-10-25
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 361.41  # Late payment 528.69-167.28
-        for_dates:
-          start: 2013-10-26
-          end: 2013-11-25
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 599.76  # Credit payment? WTF?
-        for_dates:
-          start: 2013-11-26
-          end: 2013-12-27
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 442.37  # Late payment 870.82-428.45
-        for_dates:
-          start: 2013-12-28
-          end: 2014-01-28
-    - bill:
-        description: PGE
-        paid_by: Stubbs
-        amount: 129.18  # From 1000 payment for previous month
-        for_dates:  # Duplicate of below because we both contributed
-          start: 2014-01-29
-          end: 2014-02-27
-    - bill:
-        description: PGE
-        paid_by: David
-        amount: 360.65  # Rest of that bill
-        for_dates:
-          start: 2014-01-29
-          end: 2014-02-27
-    - bill:
-        description: PGE
-        paid_by: David
-        amount: 345.38  # Late payment 706.03-360.65
-        for_dates:
-          start: 2014-02-28
-          end: 2014-03-28
-    - bill:
-        description: PGE
-        paid_by: House Acct
-        amount: 317.25
-        for_dates:
-          start: 2014-03-29
-          end: 2014-03-29
-    - bill:
-        description: PGE
-        paid_by: David
-        amount: 39.30  # House acct couldn't pay all, paid rest
-        for_dates:
-          start: 2014-03-29
-          end: 2014-04-29
-    - bill:
-        description: PGE
-        paid_by: David
-        amount: 305.68  # Late payment 660.98-355.30
-        for_dates:
-          start: 2014-04-30
-          end: 2014-05-29
+  # Stubbs paid: 474.35 - 295.00 (deposit) + 700.00 + 1000.00 = 1879.35
+  # David paid: 706.03 + 344.98 = 1051.01
+  # House Acct paid: 316.00
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 100.95  # Late payment 395.95-295
+      for_dates:
+        start: 2013-08-04
+        end: 2013-08-27
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 78.04  # Late payment 474.35-395.95
+      for_dates:
+        start: 2013-08-28
+        end: 2013-09-26
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 167.28
+      for_dates:
+        start: 2013-09-27
+        end: 2013-10-25
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 361.41  # Late payment 528.69-167.28
+      for_dates:
+        start: 2013-10-26
+        end: 2013-11-25
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 599.76  # Credit payment? WTF?
+      for_dates:
+        start: 2013-11-26
+        end: 2013-12-27
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 442.37  # Late payment 870.82-428.45
+      for_dates:
+        start: 2013-12-28
+        end: 2014-01-28
+  - bill:
+      description: PGE
+      paid_by: Stubbs
+      amount: 129.18  # From 1000 payment for previous month
+      for_dates:  # Duplicate of below because we both contributed
+        start: 2014-01-29
+        end: 2014-02-27
+  - bill:
+      description: PGE
+      paid_by: David
+      amount: 360.65  # Rest of that bill
+      for_dates:
+        start: 2014-01-29
+        end: 2014-02-27
+  - bill:
+      description: PGE
+      paid_by: David
+      amount: 345.38  # Late payment 706.03-360.65
+      for_dates:
+        start: 2014-02-28
+        end: 2014-03-28
+  - bill:
+      description: PGE
+      paid_by: House Acct
+      amount: 317.25
+      for_dates:
+        start: 2014-03-29
+        end: 2014-03-29
+  - bill:
+      description: PGE
+      paid_by: David
+      amount: 39.30  # House acct couldn't pay all, paid rest
+      for_dates:
+        start: 2014-03-29
+        end: 2014-04-29
+  - bill:
+      description: PGE
+      paid_by: David
+      amount: 305.68  # Late payment 660.98-355.30
+      for_dates:
+        start: 2014-04-30
+        end: 2014-05-29
 
-    # April 2014 - May 2014 Spreadsheet Items
-    - bill:
-        description: Compost bags
-        paid_by: David
-        amount: 19.56
-        on_date: 2014-05-13
-    - bill:
-        description: Steve driveway payment
-        paid_by: David
-        amount: -200.00
-        on_date: 2014-05-05
+  # April 2014 - May 2014 Spreadsheet Items
+  - bill:
+      description: Compost bags
+      paid_by: David
+      amount: 19.56
+      on_date: 2014-05-13
+  - bill:
+      description: Steve driveway payment
+      paid_by: David
+      amount: -200.00
+      on_date: 2014-05-05
 
-    # Jan 2014 - Feb 2014 Spreadsheet Items; no dates so guessed
-    - bill:
-        description: Paper towels
-        paid_by: Varenhorst
-        amount: 32.60
-        on_date: 2014-01-01
-    - bill:
-        description: Cleaning supplies
-        paid_by: Connie
-        amount: 8.50
-        on_date: 2014-01-01
-    - bill:
-        description: Steve driveway payment
-        paid_by: Stubbs
-        amount: -100.00
-        on_date: 2014-01-01
-    - bill:
-        description: TP + soap
-        paid_by: Audrey
-        amount: 18.00
-        on_date: 2014-01-01
-    - bill:
-        description: TP + towels
-        paid_by: Stubbs
-        amount: 53.27
-        on_date: 2014-01-01
-    - bill:
-        description: Bleach + H2O2
-        paid_by: Sima
-        amount: 5.28
-        on_date: 2014-01-01
-    - bill:
-        description: Dish soap
-        paid_by: Sima
-        amount: 2.99
-        on_date: 2014-01-01
+  # Jan 2014 - Feb 2014 Spreadsheet Items; no dates so guessed
+  - bill:
+      description: Paper towels
+      paid_by: Varenhorst
+      amount: 32.60
+      on_date: 2014-01-01
+  - bill:
+      description: Cleaning supplies
+      paid_by: Connie
+      amount: 8.50
+      on_date: 2014-01-01
+  - bill:
+      description: Steve driveway payment
+      paid_by: Stubbs
+      amount: -100.00
+      on_date: 2014-01-01
+  - bill:
+      description: TP + soap
+      paid_by: Audrey
+      amount: 18.00
+      on_date: 2014-01-01
+  - bill:
+      description: TP + towels
+      paid_by: Stubbs
+      amount: 53.27
+      on_date: 2014-01-01
+  - bill:
+      description: Bleach + H2O2
+      paid_by: Sima
+      amount: 5.28
+      on_date: 2014-01-01
+  - bill:
+      description: Dish soap
+      paid_by: Sima
+      amount: 2.99
+      on_date: 2014-01-01
 
-    # Aug 2013 - Dec 2013 Spreadsheet Items
-    - bill:
-        description: House start up supplies
-        paid_by: Stubbs
-        amount: 159.00
-        on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
-    - bill:
-        description: TP + PT
-        paid_by: Stubbs
-        amount: 59.00
-        on_date: 2013-09-07
-    - bill:
-        description: TP + light bulbs
-        paid_by: Stubbs
-        amount: 108.00
-        on_date: 2013-10-20
-    - bill:
-        description: Soaps
-        paid_by: Connie
-        amount: 10.00
-        on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
-    - bill:
-        description: Draino
-        paid_by: Stubbs
-        amount: 15.00
-        on_date: 2013-10-19
-    - bill:
-        description: Ziplocks
-        paid_by: Connie
-        amount: 6.00
-        on_date: 2013-11-16
-    - bill:
-        description: Balancing extra rent paid Sept + Oct
-        paid_by: Stubbs
-        amount: -320.00
-        on_date: 2013-12-03
-    - bill:
-        description: Balancing extra rent paid Nov + Dec
-        paid_by: Varenhorst
-        amount: -320.00
-        on_date: 2013-12-03
-    - bill:
-        description: Cleaning supplies
-        paid_by: Sima
-        amount: 10.00
-        on_date: 2013-12-03
-
-
-    # Aug 2013 - Dec 2013 Spreadsheet Items
-    - shared_cost:
-        description: Redwood slab
-        paid_by: Connie
-        amount: 220.00
-        shared_amongst: [Connie, Stubbs, David]
-        on_date: 2013-09-29
-    - shared_cost:
-        description: Packer storage box
-        paid_by: Stubbs
-        amount: 55.00
-        shared_amongst: [Connie]
-        on_date: 2013-08-03
-    - shared_cost:
-        description: Sago palm tree
-        paid_by: Stubbs
-        amount: 45.00
-        shared_amongst: [Varenhorst, Connie, Stubbs]
-        on_date: 2013-08-03
-    - shared_cost:
-        description: Lock + cable for packer boxes
-        paid_by: Connie
-        amount: 63.00
-        shared_amongst: [Connie, Stubbs]
-        on_date: 2013-08-03
-    - shared_cost:
-        description: Charcoal
-        paid_by: Connie
-        amount: 34.00
-        shared_amongst: [Varenhorst, Connie, Stubbs]
-        on_date: 2013-08-03
-    - shared_cost:
-        description: Redwood slab sanding supplies
-        paid_by: Connie
-        amount: 24.00
-        shared_amongst: [Connie, Stubbs, David]
-        on_date: 2013-09-29
-    - shared_cost:
-        description: Shandong takeou
-        paid_by: Connie
-        amount: 49.00
-        shared_amongst: [Varenhorst, Connie, Stubbs, David]
-        on_date: 2013-10-20
-    - shared_cost:
-        description: Hotpot night
-        paid_by: David
-        amount: 141.00
-        shared_amongst: [Varenhorst, Connie, David]
-        on_date: 2013-12-01
+  # Aug 2013 - Dec 2013 Spreadsheet Items
+  - bill:
+      description: House start up supplies
+      paid_by: Stubbs
+      amount: 159.00
+      on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
+  - bill:
+      description: TP + PT
+      paid_by: Stubbs
+      amount: 59.00
+      on_date: 2013-09-07
+  - bill:
+      description: TP + light bulbs
+      paid_by: Stubbs
+      amount: 108.00
+      on_date: 2013-10-20
+  - bill:
+      description: Soaps
+      paid_by: Connie
+      amount: 10.00
+      on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
+  - bill:
+      description: Draino
+      paid_by: Stubbs
+      amount: 15.00
+      on_date: 2013-10-19
+  - bill:
+      description: Ziplocks
+      paid_by: Connie
+      amount: 6.00
+      on_date: 2013-11-16
+  - bill:
+      description: Balancing extra rent paid Sept + Oct
+      paid_by: Stubbs
+      amount: -320.00
+      on_date: 2013-12-03
+  - bill:
+      description: Balancing extra rent paid Nov + Dec
+      paid_by: Varenhorst
+      amount: -320.00
+      on_date: 2013-12-03
+  - bill:
+      description: Cleaning supplies
+      paid_by: Sima
+      amount: 10.00
+      on_date: 2013-12-03
 
 
-    # Aug 2013 - Dec 2013 Spreadsheet
-    - payment:
-        payer: David
-        to: Connie
-        on_date: 2013-12-03
-        amount: 133.00
-    - payment:
-        payer: David
-        to: Stubbs
-        on_date: 2013-12-03
-        amount: 28.00
-    - payment:
-        payer: Audrey
-        to: Stubbs
-        on_date: 2013-12-04
-        amount: 164.00
-    - payment:
-        payer: Sima
-        to: Stubbs
-        on_date: 2013-12-04
-        amount: 157.00
-    - payment:
-        payer: Lauth
-        to: Stubbs
-        on_date: 2013-12-07
-        amount: 164.00
-    - payment:
-        payer: Varenhorst
-        to: Stubbs
-        on_date: 2013-12-07
-        amount: 593.00
+  # Aug 2013 - Dec 2013 Spreadsheet Items
+  - shared_cost:
+      description: Redwood slab
+      paid_by: Connie
+      amount: 220.00
+      shared_amongst: [Connie, Stubbs, David]
+      on_date: 2013-09-29
+  - shared_cost:
+      description: Packer storage box
+      paid_by: Stubbs
+      amount: 55.00
+      shared_amongst: [Connie]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Sago palm tree
+      paid_by: Stubbs
+      amount: 45.00
+      shared_amongst: [Varenhorst, Connie, Stubbs]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Lock + cable for packer boxes
+      paid_by: Connie
+      amount: 63.00
+      shared_amongst: [Connie, Stubbs]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Charcoal
+      paid_by: Connie
+      amount: 34.00
+      shared_amongst: [Varenhorst, Connie, Stubbs]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Redwood slab sanding supplies
+      paid_by: Connie
+      amount: 24.00
+      shared_amongst: [Connie, Stubbs, David]
+      on_date: 2013-09-29
+  - shared_cost:
+      description: Shandong takeou
+      paid_by: Connie
+      amount: 49.00
+      shared_amongst: [Varenhorst, Connie, Stubbs, David]
+      on_date: 2013-10-20
+  - shared_cost:
+      description: Hotpot night
+      paid_by: David
+      amount: 141.00
+      shared_amongst: [Varenhorst, Connie, David]
+      on_date: 2013-12-01
 
-    # Jan 2014 - Feb 2014 Spreadsheet; no dates, so guessed
-    - payment:
-        payer: Varenhorst
-        to: Stubbs
-        on_date: 2014-02-01
-        amount: 58.29
-    - payment:
-        payer: Sima
-        to: Stubbs
-        on_date: 2014-02-01
-        amount: 286.73
-    - payment:
-        payer: Connie
-        to: Stubbs
-        on_date: 2014-02-01
-        amount: 74.35
-    - payment:
-        payer: David
-        to: Stubbs
-        on_date: 2014-02-01
-        amount: 286.73
-    - payment:
-        payer: Audrey
-        to: Stubbs
-        on_date: 2014-02-01
-        amount: 286.73
-    - payment:
-        payer: Lauth
-        to: Stubbs
-        on_date: 2014-02-01
-        amount: 286.73
 
-    # April 2014 - May 2014 Spreadsheet
-    - payment:
-        payer: Connie
-        to: David
-        on_date: 2014-05-22
-        amount: 100.01
-    - payment:
-        payer: Varenhorst
-        to: David
-        on_date: 2014-05-22
-        amount: 100.01
-    - payment:
-        payer: Audrey
-        to: David
-        on_date: 2014-05-22
-        amount: 100.01
-    - payment:
-        payer: Lauth
-        to: David
-        on_date: 2014-05-21
-        amount: 100.01
-    - payment:
-        payer: Sima
-        to: David
-        on_date: 2014-05-27
-        amount: 100.01
+  # Aug 2013 - Dec 2013 Spreadsheet
+  - payment:
+      payer: David
+      to: Connie
+      on_date: 2013-12-03
+      amount: 133.00
+  - payment:
+      payer: David
+      to: Stubbs
+      on_date: 2013-12-03
+      amount: 28.00
+  - payment:
+      payer: Audrey
+      to: Stubbs
+      on_date: 2013-12-04
+      amount: 164.00
+  - payment:
+      payer: Sima
+      to: Stubbs
+      on_date: 2013-12-04
+      amount: 157.00
+  - payment:
+      payer: Lauth
+      to: Stubbs
+      on_date: 2013-12-07
+      amount: 164.00
+  - payment:
+      payer: Varenhorst
+      to: Stubbs
+      on_date: 2013-12-07
+      amount: 593.00
 
-    # Use of house account
-    - payment:
-        payer: Stubbs  # Via David via Venmo
-        to: House Acct
-        on_date: 2014-05-12
-        amount: 68.01
-    - payment:
-        payer: Lauth  # Via David via Venmo
-        to: House Acct
-        on_date: 2014-05-12
-        amount: 68.01
-    - payment:
-        payer: Connie
-        to: House Acct
-        on_date: 2014-05-12
-        amount: 68.01
-    - payment:
-        payer: Audrey
-        to: House Acct
-        on_date: 2014-05-11
-        amount: 68.01
-    - payment:
-        payer: David
-        to: House Acct
-        on_date: 2014-05-05
-        amount: 63.00
-    - payment:
-        payer: Varenhorst
-        to: House Acct
-        on_date: 2014-05-05
-        amount: 63.00
-    - payment:
-        payer: Varenhorst
-        to: House Acct
-        on_date: 2014-05-13
-        amount: 5.01
-    - payment:
-        payer: David
-        to: House Acct
-        on_date: 2014-05-05
-        amount: 5.01
-    - payment:
-        payer: David  # Opening account deposit
-        to: House Acct
-        on_date: 2014-04-19
-        amount: 20.00
-    - payment:
-        payer: David  # Test Square Cash deposit
-        to: House Acct
-        on_date: 2014-05-05
-        amount: 10.00
+  # Jan 2014 - Feb 2014 Spreadsheet; no dates, so guessed
+  - payment:
+      payer: Varenhorst
+      to: Stubbs
+      on_date: 2014-02-01
+      amount: 58.29
+  - payment:
+      payer: Sima
+      to: Stubbs
+      on_date: 2014-02-01
+      amount: 286.73
+  - payment:
+      payer: Connie
+      to: Stubbs
+      on_date: 2014-02-01
+      amount: 74.35
+  - payment:
+      payer: David
+      to: Stubbs
+      on_date: 2014-02-01
+      amount: 286.73
+  - payment:
+      payer: Audrey
+      to: Stubbs
+      on_date: 2014-02-01
+      amount: 286.73
+  - payment:
+      payer: Lauth
+      to: Stubbs
+      on_date: 2014-02-01
+      amount: 286.73
+
+  # April 2014 - May 2014 Spreadsheet
+  - payment:
+      payer: Connie
+      to: David
+      on_date: 2014-05-22
+      amount: 100.01
+  - payment:
+      payer: Varenhorst
+      to: David
+      on_date: 2014-05-22
+      amount: 100.01
+  - payment:
+      payer: Audrey
+      to: David
+      on_date: 2014-05-22
+      amount: 100.01
+  - payment:
+      payer: Lauth
+      to: David
+      on_date: 2014-05-21
+      amount: 100.01
+  - payment:
+      payer: Sima
+      to: David
+      on_date: 2014-05-27
+      amount: 100.01
+
+  # Use of house account
+  - payment:
+      payer: Stubbs  # Via David via Venmo
+      to: House Acct
+      on_date: 2014-05-12
+      amount: 68.01
+  - payment:
+      payer: Lauth  # Via David via Venmo
+      to: House Acct
+      on_date: 2014-05-12
+      amount: 68.01
+  - payment:
+      payer: Connie
+      to: House Acct
+      on_date: 2014-05-12
+      amount: 68.01
+  - payment:
+      payer: Audrey
+      to: House Acct
+      on_date: 2014-05-11
+      amount: 68.01
+  - payment:
+      payer: David
+      to: House Acct
+      on_date: 2014-05-05
+      amount: 63.00
+  - payment:
+      payer: Varenhorst
+      to: House Acct
+      on_date: 2014-05-05
+      amount: 63.00
+  - payment:
+      payer: Varenhorst
+      to: House Acct
+      on_date: 2014-05-13
+      amount: 5.01
+  - payment:
+      payer: David
+      to: House Acct
+      on_date: 2014-05-05
+      amount: 5.01
+  - payment:
+      payer: David  # Opening account deposit
+      to: House Acct
+      on_date: 2014-04-19
+      amount: 20.00
+  - payment:
+      payer: David  # Test Square Cash deposit
+      to: House Acct
+      on_date: 2014-05-05
+      amount: 10.00
