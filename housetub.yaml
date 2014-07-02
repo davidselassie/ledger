@@ -1,7 +1,7 @@
 ---
 house:
   name: Housetub
-  min_people: 4
+  min_people: 3
   people:
     - name: Stubbs
       residencies:
@@ -18,7 +18,7 @@ house:
           end_exclusive: 2014-06-07
     - name: Sima
       residencies:
-        - start: 2013-08-01
+        - start: 2013-09-01
           end_exclusive: 2014-08-01
     - name: David
       residencies:
