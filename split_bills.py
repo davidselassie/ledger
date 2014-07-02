@@ -444,7 +444,7 @@ def type_payment(d):
 
 def date_order_item(i):
     if isinstance(i, Bill):
-        return i.for_dates.start
+        return i.for_dates.end_exclusive
     elif isinstance(i, SharedCost):
         return i.on_date
     elif isinstance(i, Payment):
