@@ -40,7 +40,7 @@ ledger:
       amount: 220.00
       shared_amongst: [Connie, Stubbs, David]
       on_date: 2013-09-29
-  - bill:
+  - shared_cost:
       description: PG&E
       paid_by: Stubbs
       amount: 474.00
@@ -51,32 +51,32 @@ ledger:
       amount: 55.00
       shared_amongst: [Connie]
       on_date: 2013-08-03
-  - bill:
+  - shared_cost:
       description: House start up supplies
       paid_by: Stubbs
       amount: 159.00
       on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
-  - bill:
+  - shared_cost:
       description: TP + PT
       paid_by: Stubbs
       amount: 59.00
       on_date: 2013-09-07
-  - bill:
+  - shared_cost:
       description: TP + light bulbs
       paid_by: Stubbs
       amount: 108.00
       on_date: 2013-10-20
-  - bill:
+  - shared_cost:
       description: Comcast Startup
       paid_by: Stubbs
       amount: 440.00
       on_date: 2013-09-25
-  - bill:
+  - shared_cost:
       description: Comcast end of year
       paid_by: Stubbs
       amount: 357.00
       on_date: 2013-10-20
-  - bill:
+  - shared_cost:
       description: Soaps
       paid_by: Connie
       amount: 10.00
@@ -111,7 +111,7 @@ ledger:
       amount: 49.00
       shared_amongst: [Varenhorst, Connie, Stubbs, David]
       on_date: 2013-10-20
-  - bill:
+  - shared_cost:
       description: EBMUD
       paid_by: Connie
       amount: 166.00
@@ -128,7 +128,7 @@ ledger:
       amount: 59.00
       shared_amongst: [Stubbs, Connie, Varenhorst]
       on_date: 2013-07-01
-  - bill:
+  - shared_cost:
       description: Ziplocks
       paid_by: Connie
       amount: 6.00
@@ -139,17 +139,17 @@ ledger:
       amount: 141.00
       shared_amongst: [Varenhorst, Connie, David]
       on_date: 2013-12-01
-  - bill:
+  - shared_cost:
       description: Balancing extra rent paid Sept + Oct
       paid_by: Stubbs
       amount: -320.00
       on_date: 2013-12-03
-  - bill:
+  - shared_cost:
       description: Balancing extra rent paid Nov + Dec
       paid_by: Varenhorst
       amount: -320.00
       on_date: 2013-12-03
-  - bill:
+  - shared_cost:
       description: Cleaning supplies
       paid_by: Sima
       amount: 10.00

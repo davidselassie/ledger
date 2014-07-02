@@ -21,6 +21,7 @@ Bill = namedtuple('Bill', (
     'description',
     'paid_by',
     'for_dates',
+    'paid_on_date',
     'amount',
 ))
 SharedCost = namedtuple('SharedCost', (
@@ -111,6 +112,15 @@ def date_range_length(dr):
     return dr.end_exclusive - dr.start
 
 
+def date_range_of_day(d):
+    """Generate a zero-length date range for a given day.
+
+    :type d: datetime.date
+    :rtype: DateRange
+    """
+    return DateRange(start=d, end_exclusive=d)
+
+
 def date_range_intersection(a, b):
     """Find the intersection date range of two other date ranges.
 
@@ -190,6 +200,7 @@ def slice_bill(bill, ds):
             description=bill.description,
             paid_by=bill.paid_by,
             for_dates=dr,
+            paid_on_date=bill.paid_on_date,
             amount=bill.amount * date_range_overlap_fraction(bill.for_dates, dr),
         )
         for dr
@@ -327,14 +338,19 @@ def dues_for_bill(bill, house):
     return name_to_dues
 
 
-def dues_for_personal_cost(shared_cost):
+def dues_for_shared_cost(shared_cost, house):
     """Calculate what dollar amounts of a shared cost are owed by those who shared it.
 
     :type shared_cost: SharedCost
+    :type house: House
     :rtype: dict from str to float in dollars
     """
     name_to_dues = {shared_cost.paid_by: -shared_cost.amount}
-    name_to_dues_for_shared_cost = split_evenly(shared_cost.amount, shared_cost.shared_amongst)
+    if shared_cost.shared_amongst:
+        shared_amongst_names = shared_cost.shared_amongst
+    else:
+        shared_amongst_names = resident_names_during_date_range(date_range_of_day(shared_cost.on_date), house.people)
+    name_to_dues_for_shared_cost = split_evenly(shared_cost.amount, shared_amongst_names)
     name_to_dues = sum_dicts(name_to_dues, name_to_dues_for_shared_cost)
 
     total_dues = sum(name_to_dues.values())
@@ -408,26 +424,24 @@ def type_person(d):
 
 
 def type_bill(d):
-    if 'for_dates' in d and 'on_date' in d:
-        raise ValueError("bill has both 'for_dates' and 'on_date'")
-    if 'on_date' in d:
-        dr_date = type_date(d['on_date'])
-        dr = DateRange(start=dr_date, end_exclusive=dr_date)
-    else:
-        dr = type_date_range(d['for_dates'])
     return Bill(
         description=d['description'],
         paid_by=d['paid_by'],
-        for_dates=dr,
+        for_dates=type_date_range(d['for_dates']),
+        paid_on_date=type_date(d['on_date']),
         amount=float(d['amount']),
     )
 
 
 def type_shared_cost(d):
+    if 'shared_amongst' in d:
+        shared_amongst = frozenset(d['shared_amongst'])
+    else:
+        shared_amongst = None
     return SharedCost(
         description=d['description'],
         paid_by=d['paid_by'],
-        shared_amongst=frozenset(d['shared_amongst']),
+        shared_amongst=shared_amongst,
         amount=float(d['amount']),
         on_date=type_date(d['on_date']),
     )
@@ -444,7 +458,7 @@ def type_payment(d):
 
 def date_order_item(i):
     if isinstance(i, Bill):
-        return i.for_dates.end_exclusive
+        return i.paid_on_date
     elif isinstance(i, SharedCost):
         return i.on_date
     elif isinstance(i, Payment):
@@ -494,7 +508,7 @@ def main(in_fn):
             name_to_dues_for_i = dues_for_bill(i, house)
         elif isinstance(i, SharedCost):
             print_shared_cost(i)
-            name_to_dues_for_i = dues_for_personal_cost(i)
+            name_to_dues_for_i = dues_for_shared_cost(i, house)
         elif isinstance(i, Payment):
             print_payment(i)
             name_to_dues_for_i = dues_for_payment(i)
@@ -509,29 +523,36 @@ def main(in_fn):
 
 
 def print_bill(bill):
-    print('Bill for {0!r} from {1} until {2} totalling ${3:.2f} paid by {4}'.format(
+    print('Bill for {0!r} from {1} until {2} totalling ${3:.2f} paid by {4} on {5}'.format(
         bill.description,
         bill.for_dates.start,
         bill.for_dates.end_exclusive,
         bill.amount,
         bill.paid_by,
+        bill.paid_on_date,
     ))
 
 
 def print_shared_cost(shared_cost):
-    print('Cost of {0!r} totalling ${1:.2f} shared amongst {2} paid by {3}'.format(
+    if shared_cost.shared_amongst:
+        shared_amongst_str = ', '.join(shared_cost.shared_amongst)
+    else:
+        shared_amongst_str = 'everyone'
+    print('Cost of {0!r} totalling ${1:.2f} shared amongst {2} paid by {3} on {4}'.format(
         shared_cost.description,
         shared_cost.amount,
-        ', '.join(shared_cost.shared_amongst),
+        shared_amongst_str,
         shared_cost.paid_by,
+        shared_cost.on_date,
     ))
 
 
 def print_payment(payment):
-    print('Payment from {0} to {1} of ${2:.2f}'.format(
+    print('Payment from {0} to {1} of ${2:.2f} on {3}'.format(
         payment.payer,
         payment.to,
         payment.amount,
+        payment.on_date,
     ))
 
 

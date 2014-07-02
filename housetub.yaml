@@ -59,6 +59,7 @@ ledger:
       description: Garbage
       paid_by: Varenhorst
       amount: 118.73
+      on_date: 2013-10-01
       for_dates:
         start: 2013-08-01
         end_exclusive: 2013-09-30
@@ -66,6 +67,7 @@ ledger:
       description: Garbage
       paid_by: Varenhorst
       amount: 178.08
+      on_date: 2014-01-01
       for_dates:
         start: 2013-09-30
         end_exclusive: 2013-12-31
@@ -73,6 +75,7 @@ ledger:
       description: Garbage
       paid_by: Varenhorst
       amount: 178.08
+      on_date: 2014-04-01
       for_dates:
         start: 2013-12-31
         end_exclusive: 2014-03-31
@@ -80,6 +83,7 @@ ledger:
       description: Garbage
       paid_by: Varenhorst
       amount: 178.08
+      on_date: 2014-07-01
       for_dates:
         start: 2014-03-31
         end_exclusive: 2014-06-30
@@ -91,6 +95,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 319.80
+      on_date: 2013-09-16
       for_dates:
         start: 2013-08-08
         end: 2013-09-07
@@ -98,6 +103,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80  # Late payment broken out
+      on_date: 2013-09-16
       for_dates:
         start: 2013-09-08
         end: 2013-10-07
@@ -105,6 +111,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 127.70  # Credit payment
+      on_date: 2013-10-25
       for_dates:
         start: 2013-10-08
         end: 2013-11-07
@@ -112,6 +119,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
+      on_date: 2013-11-25
       for_dates:
         start: 2013-11-08
         end: 2013-12-07
@@ -119,6 +127,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
+      on_date: 2013-12-25
       for_dates:
         start: 2013-12-08
         end: 2014-01-07
@@ -126,6 +135,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
+      on_date: 2014-01-25
       for_dates:
         start: 2014-01-08
         end: 2014-02-07
@@ -133,6 +143,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
+      on_date: 2014-02-25
       for_dates:
         start: 2014-02-08
         end: 2014-03-07
@@ -140,6 +151,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
+      on_date: 2014-03-25
       for_dates:
         start: 2014-03-08
         end: 2014-04-07
@@ -147,6 +159,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
+      on_date: 2014-04-25
       for_dates:
         start: 2014-04-08
         end: 2014-05-07
@@ -154,6 +167,7 @@ ledger:
       description: Comcast
       paid_by: House Acct
       amount: 120.80
+      on_date: 2014-05-14
       for_dates:
         start: 2014-05-08
         end: 2014-06-07
@@ -161,9 +175,18 @@ ledger:
       description: Comcast
       paid_by: David
       amount: 154.30  # Late payment broken out
+      on_date: 2014-06-07
       for_dates:
         start: 2014-06-08
         end: 2014-07-07
+  - bill:
+      description: Comcast
+      paid_by: David
+      amount: 120.80
+      on_date: 2014-06-07
+      for_dates:
+        start: 2014-07-08
+        end: 2014-08-07
 
   # Connie paid: 163.44 + 406.60 + 170.45 = 740.49
   # David paid: 211.68
@@ -171,6 +194,7 @@ ledger:
       description: EBMUD
       paid_by: Connie
       amount: 163.44
+      on_date: 2013-10-21
       for_dates:
         start: 2013-08-21
         end_exclusive: 2013-10-14
@@ -178,6 +202,7 @@ ledger:
       description: EBMUD
       paid_by: Connie
       amount: 204.65
+      on_date: 2014-03-10
       for_dates:
         start: 2013-10-14
         end_exclusive: 2013-12-15
@@ -185,13 +210,15 @@ ledger:
       description: EBMUD
       paid_by: Connie
       amount: 201.95  # Late payment 406.60-204.65
+      on_date: 2014-03-10
       for_dates:
         start: 2013-12-15
         end_exclusive: 2014-02-13
   - bill:
       description: EBMUD
-      paid_by: Connie
+      paid_by: David
       amount: 170.45
+      on_date: 2014-05-06
       for_dates:
         start: 2014-02-13
         end_exclusive: 2014-04-16
@@ -199,6 +226,7 @@ ledger:
       description: EBMUD
       paid_by: David
       amount: 211.68
+      on_date: 2014-06-30
       for_dates:
         start: 2014-04-16
         end: 2014-06-13
@@ -210,6 +238,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 100.95  # Late payment 395.95-295
+      on_date: 2013-10-07
       for_dates:
         start: 2013-08-04
         end: 2013-08-27
@@ -217,6 +246,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 78.04  # Late payment 474.35-395.95
+      on_date: 2013-10-07
       for_dates:
         start: 2013-08-28
         end: 2013-09-26
@@ -224,6 +254,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 167.28
+      on_date: 2013-12-18
       for_dates:
         start: 2013-09-27
         end: 2013-10-25
@@ -231,6 +262,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 361.41  # Late payment 528.69-167.28
+      on_date: 2013-12-18
       for_dates:
         start: 2013-10-26
         end: 2013-11-25
@@ -238,6 +270,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 599.76  # Credit payment? WTF?
+      on_date: 2014-02-26
       for_dates:
         start: 2013-11-26
         end: 2013-12-27
@@ -245,6 +278,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 442.37  # Late payment 870.82-428.45
+      on_date: 2014-02-26
       for_dates:
         start: 2013-12-28
         end: 2014-01-28
@@ -252,6 +286,7 @@ ledger:
       description: PGE
       paid_by: Stubbs
       amount: 129.18  # From 1000 payment for previous month
+      on_date: 2014-02-26
       for_dates:  # Duplicate of below because we both contributed
         start: 2014-01-29
         end: 2014-02-27
@@ -259,6 +294,7 @@ ledger:
       description: PGE
       paid_by: David
       amount: 360.65  # Rest of that bill
+      on_date: 2014-04-24
       for_dates:
         start: 2014-01-29
         end: 2014-02-27
@@ -266,6 +302,7 @@ ledger:
       description: PGE
       paid_by: David
       amount: 345.38  # Late payment 706.03-360.65
+      on_date: 2014-04-24
       for_dates:
         start: 2014-02-28
         end: 2014-03-28
@@ -273,13 +310,15 @@ ledger:
       description: PGE
       paid_by: House Acct
       amount: 317.25
+      on_date: 2014-06-09
       for_dates:
         start: 2014-03-29
-        end: 2014-03-29
+        end: 2014-04-29
   - bill:
       description: PGE
       paid_by: David
       amount: 39.30  # House acct couldn't pay all, paid rest
+      on_date: 2014-06-09
       for_dates:
         start: 2014-03-29
         end: 2014-04-29
@@ -287,101 +326,102 @@ ledger:
       description: PGE
       paid_by: David
       amount: 305.68  # Late payment 660.98-355.30
+      on_date: 2014-06-09
       for_dates:
         start: 2014-04-30
         end: 2014-05-29
 
   # April 2014 - May 2014 Spreadsheet Items
-  - bill:
+  - shared_cost:
       description: Compost bags
       paid_by: David
       amount: 19.56
       on_date: 2014-05-13
-  - bill:
+  - shared_cost:
       description: Steve driveway payment
       paid_by: David
       amount: -200.00
       on_date: 2014-05-05
 
   # Jan 2014 - Feb 2014 Spreadsheet Items; no dates so guessed
-  - bill:
+  - shared_cost:
       description: Paper towels
       paid_by: Varenhorst
       amount: 32.60
       on_date: 2014-01-01
-  - bill:
+  - shared_cost:
       description: Cleaning supplies
       paid_by: Connie
       amount: 8.50
       on_date: 2014-01-01
-  - bill:
+  - shared_cost:
       description: Steve driveway payment
       paid_by: Stubbs
       amount: -100.00
       on_date: 2014-01-01
-  - bill:
+  - shared_cost:
       description: TP + soap
       paid_by: Audrey
       amount: 18.00
       on_date: 2014-01-01
-  - bill:
+  - shared_cost:
       description: TP + towels
       paid_by: Stubbs
       amount: 53.27
       on_date: 2014-01-01
-  - bill:
+  - shared_cost:
       description: Bleach + H2O2
       paid_by: Sima
       amount: 5.28
       on_date: 2014-01-01
-  - bill:
+  - shared_cost:
       description: Dish soap
       paid_by: Sima
       amount: 2.99
       on_date: 2014-01-01
 
   # Aug 2013 - Dec 2013 Spreadsheet Items
-  - bill:
+  - shared_cost:
       description: House start up supplies
       paid_by: Stubbs
       amount: 159.00
       on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
-  - bill:
+  - shared_cost:
       description: TP + PT
       paid_by: Stubbs
       amount: 59.00
       on_date: 2013-09-07
-  - bill:
+  - shared_cost:
       description: TP + light bulbs
       paid_by: Stubbs
       amount: 108.00
       on_date: 2013-10-20
-  - bill:
+  - shared_cost:
       description: Soaps
       paid_by: Connie
       amount: 10.00
       on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
-  - bill:
+  - shared_cost:
       description: Draino
       paid_by: Stubbs
       amount: 15.00
       on_date: 2013-10-19
-  - bill:
+  - shared_cost:
       description: Ziplocks
       paid_by: Connie
       amount: 6.00
       on_date: 2013-11-16
-  - bill:
+  - shared_cost:
       description: Balancing extra rent paid Sept + Oct
       paid_by: Stubbs
       amount: -320.00
       on_date: 2013-12-03
-  - bill:
+  - shared_cost:
       description: Balancing extra rent paid Nov + Dec
       paid_by: Varenhorst
       amount: -320.00
       on_date: 2013-12-03
-  - bill:
+  - shared_cost:
       description: Cleaning supplies
       paid_by: Sima
       amount: 10.00

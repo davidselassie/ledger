@@ -3,7 +3,7 @@ from datetime import date
 
 from split_bills import dues_for_bill
 from split_bills import dues_for_payment
-from split_bills import dues_for_personal_cost
+from split_bills import dues_for_shared_cost
 from split_bills import House
 from split_bills import Person
 from split_bills import Bill
@@ -24,7 +24,7 @@ class BillTestCase(unittest.TestCase):
     maxDiff = None
 
     def test_single_person(self):
-        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob')
+        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob', paid_on_date=None)
         person = Person(name='Bob', residencies=(JAN_DR, ))
         house = House(name=None, min_people=1, people=(person, ))
 
@@ -33,7 +33,7 @@ class BillTestCase(unittest.TestCase):
         self.assertEqual(found_pc, expected_pc)
 
     def test_two_people(self):
-        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob')
+        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob', paid_on_date=None)
         person1 = Person(name='Bob', residencies=(JAN_DR, ))
         person2 = Person(name='Alice', residencies=(JAN_DR, ))
         house = House(name=None, min_people=1, people=(person1, person2))
@@ -43,7 +43,7 @@ class BillTestCase(unittest.TestCase):
         self.assertEqual(found_pc, expected_pc)
 
     def test_half_and_half_person(self):
-        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob')
+        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob', paid_on_date=None)
         person1 = Person(name='Bob', residencies=(FIRST_HALF_JAN_DR, ))
         person2 = Person(name='Alice', residencies=(SECOND_HALF_JAN_DR, ))
         house = House(name=None, min_people=1, people=(person1, person2))
@@ -53,7 +53,7 @@ class BillTestCase(unittest.TestCase):
         self.assertEqual(found_pc, expected_pc)
 
     def test_one_and_half_person(self):
-        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob')
+        bill = Bill(description=None, for_dates=JAN_DR, amount=100.0, paid_by='Bob', paid_on_date=None)
         person1 = Person(name='Bob', residencies=(JAN_DR, ))
         person2 = Person(name='Alice', residencies=(FIRST_HALF_JAN_DR, ))
         house = House(name=None, min_people=1, people=(person1, person2))
@@ -75,7 +75,7 @@ class SharedCostTestCase(unittest.TestCase):
             amount=100.0,
         )
 
-        found_pc = dues_for_personal_cost(shared)
+        found_pc = dues_for_shared_cost(shared, None)
         expected_pc = {'Bob': -50.0, 'Alice': 50.0}
         self.assertEqual(found_pc, expected_pc)
 
