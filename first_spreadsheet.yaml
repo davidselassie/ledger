@@ -1,0 +1,186 @@
+---
+house:
+  name: Housetub
+  min_people: 7
+  people:
+    - name: Stubbs
+      residencies:
+        - start: 2013-08-01
+          end: 2014-05-23
+        - start: 2014-08-06
+    - name: Connie
+      residencies:
+        - start: 2013-08-01
+          end_exclusive: 2014-06-07
+    - name: Varenhorst
+      residencies:
+        - start: 2013-08-01
+          end_exclusive: 2014-06-07
+    - name: Sima
+      residencies:
+        - start: 2013-08-01
+          end_exclusive: 2014-08-01
+    - name: David
+      residencies:
+        - start: 2013-09-01
+          end_exclusive: 2014-08-01
+    - name: Audrey
+      residencies:
+        - start: 2013-09-01
+          end: 2014-05-27
+    - name: Lauth
+      residencies:
+        - start: 2013-09-01
+          end: 2014-05-27
+
+ledger:
+  - shared_cost:
+      description: Redwood slab
+      paid_by: Connie
+      amount: 220.00
+      shared_amongst: [Connie, Stubbs, David]
+      on_date: 2013-09-29
+  - bill:
+      description: PG&E
+      paid_by: Stubbs
+      amount: 474.00
+      on_date: 2013-10-20
+  - shared_cost:
+      description: Packer storage box
+      paid_by: Stubbs
+      amount: 55.00
+      shared_amongst: [Connie]
+      on_date: 2013-08-03
+  - bill:
+      description: House start up supplies
+      paid_by: Stubbs
+      amount: 159.00
+      on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
+  - bill:
+      description: TP + PT
+      paid_by: Stubbs
+      amount: 59.00
+      on_date: 2013-09-07
+  - bill:
+      description: TP + light bulbs
+      paid_by: Stubbs
+      amount: 108.00
+      on_date: 2013-10-20
+  - bill:
+      description: Comcast Startup
+      paid_by: Stubbs
+      amount: 440.00
+      on_date: 2013-09-25
+  - bill:
+      description: Comcast end of year
+      paid_by: Stubbs
+      amount: 357.00
+      on_date: 2013-10-20
+  - bill:
+      description: Soaps
+      paid_by: Connie
+      amount: 10.00
+      on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
+  - shared_cost:
+      description: Sago palm tree
+      paid_by: Stubbs
+      amount: 45.00
+      shared_amongst: [Varenhorst, Connie, Stubbs]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Lock + cable for packer boxes
+      paid_by: Connie
+      amount: 63.00
+      shared_amongst: [Connie, Stubbs]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Charcoal
+      paid_by: Connie
+      amount: 34.00
+      shared_amongst: [Varenhorst, Connie, Stubbs]
+      on_date: 2013-08-03
+  - shared_cost:
+      description: Redwood slab sanding supplies
+      paid_by: Connie
+      amount: 24.00
+      shared_amongst: [Connie, Stubbs, David]
+      on_date: 2013-09-29
+  - shared_cost:
+      description: Shandong takeout
+      paid_by: Connie
+      amount: 49.00
+      shared_amongst: [Varenhorst, Connie, Stubbs, David]
+      on_date: 2013-10-20
+  - bill:
+      description: EBMUD
+      paid_by: Connie
+      amount: 166.00
+      on_date: 2013-10-20
+  - shared_cost:
+      description: Draino
+      paid_by: Stubbs
+      amount: 15.00
+      shared_amongst: [Connie, Varenhorst, Sima, David, Stubbs]
+      on_date: 2013-10-19
+  - shared_cost:
+      description: Initial Comcast
+      paid_by: Stubbs
+      amount: 59.00
+      shared_amongst: [Stubbs, Connie, Varenhorst]
+      on_date: 2013-07-01
+  - bill:
+      description: Ziplocks
+      paid_by: Connie
+      amount: 6.00
+      on_date: 2013-11-16
+  - shared_cost:
+      description: Hotpot night
+      paid_by: David
+      amount: 141.00
+      shared_amongst: [Varenhorst, Connie, David]
+      on_date: 2013-12-01
+  - bill:
+      description: Balancing extra rent paid Sept + Oct
+      paid_by: Stubbs
+      amount: -320.00
+      on_date: 2013-12-03
+  - bill:
+      description: Balancing extra rent paid Nov + Dec
+      paid_by: Varenhorst
+      amount: -320.00
+      on_date: 2013-12-03
+  - bill:
+      description: Cleaning supplies
+      paid_by: Sima
+      amount: 10.00
+      on_date: 2013-12-03
+  - payment:
+      payer: David
+      to: Connie
+      on_date: 2013-12-03
+      amount: 133.00
+  - payment:
+      payer: David
+      to: Stubbs
+      on_date: 2013-12-03
+      amount: 28.00
+  - payment:
+      payer: Audrey
+      to: Stubbs
+      on_date: 2013-12-04
+      amount: 164.00
+  - payment:
+      payer: Sima
+      to: Stubbs
+      on_date: 2013-12-04
+      amount: 157.00
+  - payment:
+      payer: Lauth
+      to: Stubbs
+      on_date: 2013-12-07
+      amount: 164.00
+  - payment:
+      payer: Varenhorst
+      to: Stubbs
+      on_date: 2013-12-07
+      amount: 593.00
