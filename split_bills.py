@@ -442,6 +442,17 @@ def type_payment(d):
     )
 
 
+def date_order_item(i):
+    if isinstance(i, Bill):
+        return i.for_dates.start
+    elif isinstance(i, SharedCost):
+        return i.on_date
+    elif isinstance(i, Payment):
+        return i.on_date
+    else:
+        raise TypeError('unknown ledger item type {0!r}'.format(type(i)))
+
+
 def type_ledger(d):
     for i in d:
         if len(i) > 1:
@@ -473,7 +484,7 @@ def load_yaml(fn):
 def main(in_fn):
     in_f_d = load_yaml(in_fn)
     house = type_house(in_f_d['house'])
-    ledger = tuple(type_ledger(in_f_d['ledger']))
+    ledger = sorted(tuple(type_ledger(in_f_d['ledger'])), key=date_order_item)
 
     name_to_total_dues = {}
     for i in ledger:
