@@ -488,6 +488,7 @@ def main(in_fn):
 
     name_to_total_dues = {}
     for i in ledger:
+        print('---> ', end='')
         if isinstance(i, Bill):
             print_bill(i)
             name_to_dues_for_i = dues_for_bill(i, house)
@@ -501,13 +502,10 @@ def main(in_fn):
             raise TypeError('unknown ledger item type {0!r}'.format(type(i)))
         name_to_total_dues = sum_dicts(name_to_total_dues, name_to_dues_for_i)
         print_name_to_dues(name_to_dues_for_i)
-        print('----')
-
-    print('====')
-    print('Total Dues:')
-    print_name_to_dues(name_to_total_dues)
-    if round(sum(name_to_total_dues.values()), 2) != 0.0:
-        raise RuntimeError('grand total does not check out')
+        print('========> Running Total')
+        print_name_to_dues(name_to_total_dues)
+        if round(sum(name_to_total_dues.values()), 2) != 0.0:
+            raise RuntimeError('grand total does not check out')
 
 
 def print_bill(bill):
