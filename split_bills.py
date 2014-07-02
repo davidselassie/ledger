@@ -394,7 +394,7 @@ def type_shared_cost(d):
     return SharedCost(
         description=d['description'],
         paid_by=d['paid_by'],
-        shared_amongst=d['shared_amongst'],
+        shared_amongst=frozenset(d['shared_amongst']),
         amount=float(d['amount']),
         on_date=type_date(d['on_date']),
     )
