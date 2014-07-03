@@ -91,10 +91,15 @@ ledger:
   # Stubbs paid: 319.80 + 120.80 * 7 + 127.70 = 1293.10
   # David paid: 154.30
   # House Acct paid: 120.80
+  - shared_cost:
+      description: Comcast startup
+      paid_by: Stubbs
+      amount: 199.00
+      on_date: 2013-09-01
   - bill:
       description: Comcast
       paid_by: Stubbs
-      amount: 319.80
+      amount: 120.80 # 319.80-199.00 startup
       on_date: 2013-09-16
       for_dates:
         start: 2013-08-08
