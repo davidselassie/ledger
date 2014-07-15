@@ -192,6 +192,14 @@ ledger:
       for_dates:
         start: 2014-07-08
         end: 2014-08-07
+  - bill:
+      description: Comcast
+      paid_by: David
+      amount: 120.80
+      on_date: 2014-07-14
+      for_dates:
+        start: 2014-07-07
+        end: 2014-08-07
 
   # Connie paid: 163.44 + 406.60 + 170.45 = 740.49
   # David paid: 211.68
@@ -335,6 +343,14 @@ ledger:
       for_dates:
         start: 2014-04-30
         end: 2014-05-29
+  - bill:
+      description: PGE
+      paid_by: David
+      amount: 190.63
+      on_date: 2014-07-14
+      for_dates:
+        start: 2014-05-30
+        end: 2014-06-27
 
   # April 2014 - May 2014 Spreadsheet Items
   - shared_cost:
