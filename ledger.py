@@ -251,6 +251,8 @@ def split_evenly(amount, among_names):
     :type among_names: iterable of str
     :rtype: dict from str to float in dollars
     """
+    if isinstance(among_names, str):
+        raise TypeError("among_names shouldn't be a single string")
     num_people = len(among_names)
     name_to_dues = {
         person: amount / num_people
