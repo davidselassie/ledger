@@ -116,7 +116,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 127.70  # Credit payment
-      on_date: 2013-10-25
+      on_date: 2013-10-20  # Effectively, since Stubbs pooled these last 3 months together; actually paid on 2013-10-25
       for_dates:
         start: 2013-10-08
         end: 2013-11-07
@@ -124,7 +124,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
-      on_date: 2013-11-25
+      on_date: 2013-10-20  # Effectively, since Stubbs pooled these last 3 months together; actually paid on 2013-11-25
       for_dates:
         start: 2013-11-08
         end: 2013-12-07
@@ -132,7 +132,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
-      on_date: 2013-12-25
+      on_date: 2013-10-20  # Effectively, since Stubbs pooled these last 3 months together; actually paid on 2013-12-25
       for_dates:
         start: 2013-12-08
         end: 2014-01-07
@@ -140,7 +140,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
-      on_date: 2014-01-25
+      on_date: 2014-04-01 # Maybe effectively, since Stubbs pooled 5 months together; actually paid on 2014-01-25
       for_dates:
         start: 2014-01-08
         end: 2014-02-07
@@ -148,7 +148,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
-      on_date: 2014-02-25
+      on_date: 2014-04-01 # Maybe effectively, since Stubbs pooled 5 months together; actually paid on 2014-02-25
       for_dates:
         start: 2014-02-08
         end: 2014-03-07
@@ -156,7 +156,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
-      on_date: 2014-03-25
+      on_date: 2014-04-01 # Maybe effectively, since Stubbs pooled 5 months together; actually paid on 2014-03-25
       for_dates:
         start: 2014-03-08
         end: 2014-04-07
@@ -164,7 +164,7 @@ ledger:
       description: Comcast
       paid_by: Stubbs
       amount: 120.80
-      on_date: 2014-04-25
+      on_date: 2014-04-01 # Maybe effectively, since Stubbs pooled 5 months together; actually paid on 2014-04-25
       for_dates:
         start: 2014-04-08
         end: 2014-05-07
@@ -315,7 +315,7 @@ ledger:
       description: PGE
       paid_by: House Acct
       amount: 317.25
-      on_date: 2014-06-09
+      on_date: 2014-05-13 # Actually on 2014-06-09, but putting before so all House Acct reckoning happens at the same time
       for_dates:
         start: 2014-03-29
         end: 2014-04-29
@@ -390,7 +390,8 @@ ledger:
       description: House start up supplies
       paid_by: Stubbs
       amount: 159.00
-      on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
+      shared_amongst: [Audrey, Lauth, Connie, David, Sima, Stubbs, Varenhorst]  # Share amongst everyone even though paid before moved in.
+      on_date: 2013-08-03
   - shared_cost:
       description: TP + PT
       paid_by: Stubbs
@@ -405,7 +406,8 @@ ledger:
       description: Soaps
       paid_by: Connie
       amount: 10.00
-      on_date: 2013-09-03  # Actually 2013-08-03, but put here to share amongst everyone
+      shared_amongst: [Audrey, Lauth, Connie, David, Sima, Stubbs, Varenhorst]  # Share amongst everyone even though paid before moved in.
+      on_date: 2013-08-03
   - shared_cost:
       description: Draino
       paid_by: Stubbs
@@ -516,36 +518,36 @@ ledger:
       on_date: 2013-12-07
       amount: 593.00
 
-  # Jan 2014 - Feb 2014 Spreadsheet; no dates, so guessed
+  # Jan 2014 - April 2014 Spreadsheet; no dates, so guessed from Stubbs' Venmo
   - payment:
       payer: Varenhorst
       to: Stubbs
-      on_date: 2014-02-01
+      on_date: 2014-04-17
       amount: 58.29
   - payment:
       payer: Sima
       to: Stubbs
-      on_date: 2014-02-01
+      on_date: 2014-04-17
       amount: 286.73
   - payment:
       payer: Connie
       to: Stubbs
-      on_date: 2014-02-01
+      on_date: 2014-04-17
       amount: 74.35
   - payment:
       payer: David
       to: Stubbs
-      on_date: 2014-02-01
+      on_date: 2014-04-17
       amount: 286.73
   - payment:
       payer: Audrey
       to: Stubbs
-      on_date: 2014-02-01
+      on_date: 2014-04-18
       amount: 286.73
   - payment:
       payer: Lauth
       to: Stubbs
-      on_date: 2014-02-01
+      on_date: 2014-04-18  # Actually 2014-04-24, but this brings in line with items on second spreadsheet.
       amount: 286.73
 
   # April 2014 - May 2014 Spreadsheet
