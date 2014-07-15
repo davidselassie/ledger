@@ -1,22 +1,20 @@
-housecash
-=========
+ledger
+======
 Tool for splitting up house expenses.
 
 Usage
 -----
-Run `python ledger.py HOUSE_YAML` to split up a list of expenses.
-
-This will figure out who owes what fraction of each expense and output the split. There are a few types of expenses you can log.
+Run `python ledger.py LEDGER_YAML` to split all expenses and calculate who is currently in debt. There are a few types of expenses you can add to the ledger.
 
 Expense Types
 -------------
 ### Bills
-Each bill is split evenly amongst all of the people in the house, based on the fraction of the time of the bill that they were in residence. A bill can also be for a single moment in time, in which case it's shared amongst all people who live in the house that day equally.
+Each bill is split evenly amongst all of the people in the house, based on the fraction of the time of the bill that they were in residence.
 
 If person A is in residence the entire duration of a bill, and person B is there only half of the bills time, person A will owe 3/4ths of it and person B 1/4th.
 
 ### Shared Costs
-Shared costs are split evenly amongst a set list of people.
+Shared costs are split evenly amongst a set list of people or all people living in the house at a given instance in time.
 
 ### Payments
 Payments log the transfer of money from one person to another. You use them to pay off dues.
@@ -64,20 +62,21 @@ Expense Definitions
 Expenses are listed in a `ledger` in the house YAML.
 
 ### Bills
-Each bill has a `description`, the name of the person `paid_by`, an `amount` in dollars, and `for_dates` which is a single date range or `on_date` which is a single day.
+Each bill has a `description`, the name of the person `paid_by`, an `amount` in dollars, `for_dates` which is a single date range, and `paid_on_date` which is a single day.
 
 ```yaml
 bill:
   - description: Garbage
     paid_by: Stubbs
     amount: 178.08
+    paid_on_date: 2014-06-28
     for_dates:
       start: 2014-03-31
       end: 2014-06-14
 ```
 
 ### Shared Costs
-Each shared cost has a `description`, the name of the person `paid_by`, an `amount` in dollars, and `on_date` which is a single day, and a list of names of people the cost was `shared_amongst`.
+Each shared cost has a `description`, the name of the person `paid_by`, an `amount` in dollars, and `on_date` which is a single day, and a list of names of people the cost was `shared_amongst`. If the list of names is excluded, it is shared amongst all people living in the house on that date equally.
 
 ```yaml
 shared_cost:

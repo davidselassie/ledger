@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.4
-"""USAGE: split_bills.py HOUSE_YAML
+"""USAGE: ledger.py LEDGER_YAML
 
 See README.md for YAML definitions.
 """
@@ -185,10 +185,11 @@ def slice_bill(bill, ds):
     ...     Bill(
     ...         description=None,
     ...         paid_by=None,
+    ...         paid_on_date=date(2014, 2, 1),
     ...         for_dates=DateRange(start=date(2014, 1, 1), end_exclusive=date(2014, 1, 31)),
     ...         amount=100.0),
     ...     frozenset((date(2014, 1, 16), )))
-    (Bill(description=None, paid_by=None, for_dates=DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), amount=50.0), Bill(description=None, paid_by=None, for_dates=DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31)), amount=50.0))
+    (Bill(description=None, paid_by=None, for_dates=DateRange(start=datetime.date(2014, 1, 1), end_exclusive=datetime.date(2014, 1, 16)), paid_on_date=datetime.date(2014, 2, 1), amount=50.0), Bill(description=None, paid_by=None, for_dates=DateRange(start=datetime.date(2014, 1, 16), end_exclusive=datetime.date(2014, 1, 31)), paid_on_date=datetime.date(2014, 2, 1), amount=50.0))
 
     :type bill: Bill
     :type ds: iterable of dates

@@ -1,15 +1,15 @@
 import unittest
 from datetime import date
 
-from split_bills import dues_for_bill
-from split_bills import dues_for_payment
-from split_bills import dues_for_shared_cost
-from split_bills import House
-from split_bills import Person
-from split_bills import Bill
-from split_bills import DateRange
-from split_bills import Payment
-from split_bills import SharedCost
+from ledger import dues_for_bill
+from ledger import dues_for_payment
+from ledger import dues_for_shared_cost
+from ledger import House
+from ledger import Person
+from ledger import Bill
+from ledger import DateRange
+from ledger import Payment
+from ledger import SharedCost
 
 
 JAN_START = date(2014, 1, 1)
