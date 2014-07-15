@@ -24,6 +24,7 @@ Bill = namedtuple('Bill', (
     'paid_on_date',
     'amount',
 ))
+SHARED_AMONGST_EVERYONE = 'SHARE_AMONGST_EVERYONE'
 SharedCost = namedtuple('SharedCost', (
     'description',
     'paid_by',
@@ -347,10 +348,11 @@ def dues_for_shared_cost(shared_cost, house):
     :rtype: dict from str to float in dollars
     """
     name_to_dues = {shared_cost.paid_by: -shared_cost.amount}
-    if shared_cost.shared_amongst:
-        shared_amongst_names = shared_cost.shared_amongst
-    else:
+    if shared_cost.shared_amongst == SHARED_AMONGST_EVERYONE:
         shared_amongst_names = resident_names_during_date_range(date_range_of_day(shared_cost.on_date), house.people)
+    else:
+        shared_amongst_names = shared_cost.shared_amongst
+
     name_to_dues_for_shared_cost = split_evenly(shared_cost.amount, shared_amongst_names)
     name_to_dues = sum_dicts(name_to_dues, name_to_dues_for_shared_cost)
 
@@ -438,7 +440,7 @@ def type_shared_cost(d):
     if 'shared_amongst' in d:
         shared_amongst = frozenset(d['shared_amongst'])
     else:
-        shared_amongst = None
+        shared_amongst = SHARED_AMONGST_EVERYONE
     return SharedCost(
         description=d['description'],
         paid_by=d['paid_by'],
@@ -535,10 +537,11 @@ def print_bill(bill):
 
 
 def print_shared_cost(shared_cost):
-    if shared_cost.shared_amongst:
-        shared_amongst_str = ', '.join(shared_cost.shared_amongst)
-    else:
+    if shared_cost.shared_amongst == SHARED_AMONGST_EVERYONE:
         shared_amongst_str = 'everyone'
+    else:
+        shared_amongst_str = ', '.join(shared_cost.shared_amongst)
+
     print('Cost of {0!r} totalling ${1:.2f} shared amongst {2} paid by {3} on {4}'.format(
         shared_cost.description,
         shared_cost.amount,

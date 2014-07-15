@@ -10,6 +10,7 @@ from ledger import Bill
 from ledger import DateRange
 from ledger import Payment
 from ledger import SharedCost
+from ledger import SHARED_AMONGST_EVERYONE
 
 
 JAN_START = date(2014, 1, 1)
@@ -66,7 +67,7 @@ class BillTestCase(unittest.TestCase):
 class SharedCostTestCase(unittest.TestCase):
     maxDiff = None
 
-    def test_shared(self):
+    def test_explicit_split(self):
         shared = SharedCost(
             description=None,
             paid_by='Bob',
@@ -76,6 +77,23 @@ class SharedCostTestCase(unittest.TestCase):
         )
 
         found_pc = dues_for_shared_cost(shared, None)
+        expected_pc = {'Bob': -50.0, 'Alice': 50.0}
+        self.assertEqual(found_pc, expected_pc)
+
+    def test_residence_split(self):
+        shared = SharedCost(
+            description=None,
+            paid_by='Bob',
+            on_date=JAN_START,
+            shared_amongst=SHARED_AMONGST_EVERYONE,
+            amount=100.0,
+        )
+        person1 = Person(name='Bob', residencies=(JAN_DR, ))
+        person2 = Person(name='Alice', residencies=(FIRST_HALF_JAN_DR, ))
+        person3 = Person(name='Dan', residencies=(SECOND_HALF_JAN_DR, ))
+        house = House(name=None, min_people=1, people=(person1, person2, person3))
+
+        found_pc = dues_for_shared_cost(shared, house)
         expected_pc = {'Bob': -50.0, 'Alice': 50.0}
         self.assertEqual(found_pc, expected_pc)
 
