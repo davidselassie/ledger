@@ -1,6 +1,8 @@
+import doctest
 import unittest
 from datetime import date
 
+import ledger
 from ledger import dues_for_bill
 from ledger import dues_for_payment
 from ledger import dues_for_shared_cost
@@ -107,6 +109,11 @@ class PaymentsTestCase(unittest.TestCase):
         found_pc = dues_for_payment(payment)
         expected_pc = {'Bob': -100.0, 'Alice': 100.0}
         self.assertEqual(found_pc, expected_pc)
+
+
+class DoctestTestCase(unittest.TestCase):
+    def test_doctests(self):
+        doctest.testmod(ledger)
 
 
 if __name__ == '__main__':
