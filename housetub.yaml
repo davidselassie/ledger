@@ -172,7 +172,7 @@ ledger:
       description: Comcast
       paid_by: House Acct
       amount: 120.80
-      on_date: 2014-05-14
+      on_date: 2014-06-07
       for_dates:
         start: 2014-05-08
         end: 2014-06-07
@@ -188,17 +188,9 @@ ledger:
       description: Comcast
       paid_by: David
       amount: 120.80
-      on_date: 2014-06-07
-      for_dates:
-        start: 2014-07-08
-        end: 2014-08-07
-  - bill:
-      description: Comcast
-      paid_by: David
-      amount: 120.80
       on_date: 2014-07-14
       for_dates:
-        start: 2014-07-07
+        start: 2014-07-08
         end: 2014-08-07
 
   # Connie paid: 163.44 + 406.60 + 170.45 = 740.49
