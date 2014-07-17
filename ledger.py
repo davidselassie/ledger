@@ -565,7 +565,7 @@ def print_payment(payment):
 def print_name_to_dues(name_to_dues):
     print('Dues:')
     for name, dues in sorted(name_to_dues.items()):
-        if dues != 0.0:
+        if round(dues, 2) != 0.0:
             print('  {0}: ${1:.2f}'.format(name, dues))
 
 
