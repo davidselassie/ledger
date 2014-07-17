@@ -636,3 +636,8 @@ ledger:
       to: House Acct
       on_date: 2014-05-05
       amount: 10.00
+  - payment:
+      payer: House Acct
+      to: David
+      on_date: 2014-06-07
+      amount: 0.01  # This is to zero out the house account. I'm reclaiming it.
