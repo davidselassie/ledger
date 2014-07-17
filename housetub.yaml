@@ -38,11 +38,11 @@ house:
     - name: Thibault
       residencies:
         - start: 2014-06-07
-          end_exclusive: 2014-09-01
+          end: 2014-07-16
     - name: Pieter
       residencies:
         - start: 2014-06-07
-          end_exclusive: 2014-09-01
+          end: 2014-07-16
     - name: Juan Pablo
       residencies:
         - start: 2014-06-03
@@ -50,7 +50,7 @@ house:
     - name: Rodolphe
       residencies:
         - start: 2014-06-03
-          end_exclusive: 2014-08-01
+          end: 2014-07-14
 
 
 ledger:
