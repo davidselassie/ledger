@@ -46,11 +46,21 @@ house:
     - name: Juan Pablo
       residencies:
         - start: 2014-06-03
-          end_exclusive: 2014-08-01
+          end_exclusive: 2014-08-16
     - name: Rodolphe
       residencies:
         - start: 2014-06-03
           end: 2014-07-14
+    - name: AirBNBers via Thibault
+      residencies:
+        - start: 2014-07-17
+          end: 2014-07-31
+    - name: Nicolas
+      residencies:
+        - start: 2014-08-01
+    - name: Alex
+      residencies:
+        - start: 2014-08-01
 
 
 ledger:
