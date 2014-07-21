@@ -651,3 +651,20 @@ ledger:
       to: David
       on_date: 2014-06-07
       amount: 0.01  # This is to zero out the house account. I'm reclaiming it.
+
+  # The great reckoning. This should balance out all bills from Housetub 1.0.
+  - payment:
+      payer: Stephen
+      to: David
+      on_date: 2014-07-21
+      amount: 5.20
+  - payment:
+      payer: Sima
+      to: David
+      on_date: 2014-07-21
+      amount: 287.35
+  - payment:
+      payer: Sima
+      to: Varenhorst
+      on_date: 2014-07-21
+      amount: 39.59
