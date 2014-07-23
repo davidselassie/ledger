@@ -668,3 +668,8 @@ ledger:
       to: Varenhorst
       on_date: 2014-07-21
       amount: 39.59
+  - payment:
+      payer: Audrey
+      to: David
+      on_date: 2014-07-23
+      amount: 128.71
