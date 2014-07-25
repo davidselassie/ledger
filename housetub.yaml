@@ -678,3 +678,8 @@ ledger:
       to: David
       on_date: 2014-07-25
       amount: 61.32
+  - payment:
+      payer: Nicolas
+      to: David
+      on_date: 2014-07-25
+      amount: 5.20
