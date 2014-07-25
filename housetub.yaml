@@ -683,3 +683,8 @@ ledger:
       to: David
       on_date: 2014-07-25
       amount: 5.20
+  - payment:
+      payer: Juan Pablo
+      to: David
+      on_date: 2014-07-25
+      amount: 97.65
