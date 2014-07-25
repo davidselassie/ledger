@@ -673,3 +673,8 @@ ledger:
       to: David
       on_date: 2014-07-23
       amount: 128.71
+  - payment:
+      payer: Connie
+      to: David
+      on_date: 2014-07-25
+      amount: 61.32
