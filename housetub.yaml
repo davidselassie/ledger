@@ -688,3 +688,18 @@ ledger:
       to: David
       on_date: 2014-07-25
       amount: 97.65
+  - payment:
+      payer: Thibault
+      to: Varenhorst
+      on_date: 2014-07-29
+      amount: 67.17
+  - payment:
+      payer: Pieter
+      to: David
+      on_date: 2014-07-29
+      amount: 67.17
+  - payment:
+      payer: AirBNBers via Thibault
+      to: Varenhorst
+      on_date: 2014-07-29
+      amount: 14.61
