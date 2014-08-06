@@ -703,3 +703,13 @@ ledger:
       to: Varenhorst
       on_date: 2014-07-29
       amount: 14.61
+  - payment:
+      payer: Lauth
+      to: David
+      on_date: 2014-08-06
+      amount: 146.71
+  - payment:
+      payer: Stubbs  # I'm assuming that Varenhorst will take this out of the lump sum Stubbs paid for the summer.
+      to: Varenhorst
+      on_date: 2014-08-06
+      amount: 76.12
